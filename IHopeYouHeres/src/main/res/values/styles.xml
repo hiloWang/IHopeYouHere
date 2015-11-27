@@ -1,0 +1,100 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <!-- Dark Themes-->
+
+    <!-- Mocked Account -->
+    <style name="MockedAccountDark" parent="MaterialNavigationDrawerTheme">
+        <item name="colorPrimary">#F50057</item>
+        <item name="colorPrimaryDark">#FF80AB</item>
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="singleAccount">true</item><!-- Remove the change account button -->
+    </style>
+
+    <!-- Light Themes-->
+
+    <!-- Mocked Account 使用material主题的时候，必须设定targetSdkVersion = 21，否则界面看起来是模糊的 -->
+    <style name="MockedAccountLight" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar">
+        <!-- Actionbar color -->
+        <item name="colorPrimary">#F50057</item>
+        <!--Status bar color-->
+        <item name="colorPrimaryDark">#FF80AB</item>
+        <!-- Status bar color API 21 -->
+        <!--<item name="android:statusBarColor">#FF80AB</item>-->
+        <!--Window color-->
+        <!--<item name="android:windowBackground">@color/dim_foreground_material_dark</item>-->
+        <!-- colorAccent: 各控制元件(如：check box、switch 或是 radoi) 被勾选 (checked) 或是选定 (selected) 的颜色。-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Remove the change account button 注释后则开启 navigation账号 button 按钮, 点击切换账号 -->
+        <!--<item name="singleAccount">true</item>-->
+        <!-- colorControlNormal: 各控制元件的预设颜色。-->
+        <!--<item name="android:colorControlNormal"></item>-->
+        <!-- navigationBarColor: 导航栏的背景色，但只能用在 API Level 21 (Android 5) 以上的版本-->
+        <!--<item name="android:navigationBarColor"></item>-->
+        <!--正常状态下字体颜色和icon颜色-->
+        <!--<item name="android:textColorPrimary">@color/main_white</item>-->
+    </style>
+
+    <!-- Dialogs -->
+    <style name="SampleHeader">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/headerTitle</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
+        <item name="android:layout_marginLeft">@dimen/headerMarginStart</item>
+        <item name="android:layout_marginStart" tools:ignore="NewApi">@dimen/headerMarginStart
+        </item>
+        <item name="android:layout_marginTop">@dimen/headerMarginVertical</item>
+        <item name="android:layout_marginBottom">@dimen/headerMarginVertical</item>
+    </style>
+
+    <!-- DrawerNavigation -->
+    <declare-styleable name="MaterialSection">
+        <attr name="sectionColorIcon" format="color" />
+        <attr name="sectionColorText" format="color" />
+        <attr name="sectionColorNotification" format="color" />
+        <attr name="sectionBackgroundColorPressed" format="color" />
+        <attr name="sectionBackgroundColorSelected" format="color" />
+        <attr name="sectionBackgroundColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="MaterialNavigationDrawer">
+        <attr name="rippleBackport" format="boolean" /><!-- supporto del ripple nelle versioni precedenti di android -->
+        <attr name="drawerType" format="integer" /><!-- Tipologia del drawer -->
+        <attr name="uniqueToolbarColor" format="boolean" /><!-- La toolbar non cambia mai di colore -->
+        <attr name="singleAccount" format="boolean" /><!-- utente singolo (senza pulsante di cambio) -->
+        <attr name="multipaneSupport" format="boolean" />
+        <attr name="drawerColor" format="color" /><!-- Colore del drawer -->
+        <attr name="sectionStyle" format="reference" />
+        <attr name="subheaderStyle" format="reference"/>
+        <attr name="accountStyle" format="reference" />
+        <attr name="learningPattern" format="boolean" /><!-- true -> attivo, false -> disattivato -->
+        <attr name="defaultSectionLoaded" format="integer" /><!-- la prima section ad essere caricata -->
+        <attr name="toolbarElevation" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="MaterialSubheader">
+        <attr name="subheaderTitleColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="MaterialAccount">
+        <attr name="titleColor" format="color" />
+        <attr name="subtitleColor" format="color" />
+    </declare-styleable>
+
+
+</resources>

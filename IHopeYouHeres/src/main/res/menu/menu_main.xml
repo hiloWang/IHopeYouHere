@@ -1,0 +1,47 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.hilo.navigation.MaterialNavigationDrawer">
+    <item android:id="@+id/action_settings"
+          android:orderInCategory="100"
+          android:title="@string/action_settings"
+          app:showAsAction="never"/>
+    <item
+        android:id="@+id/about"
+        android:title="@string/about"/>
+
+    <!--<item android:id="@+id/action_edit"-->
+          <!--android:title="@string/action_edit"-->
+          <!--android:orderInCategory="80"-->
+          <!--android:icon="@drawable/ab_edit"-->
+          <!--app:showAsAction="ifRoom" />-->
+
+    <!--<item android:id="@+id/action_share"-->
+          <!--android:title="@string/action_edit"-->
+          <!--android:orderInCategory="90"-->
+          <!--android:icon="@drawable/ab_share"-->
+          <!--app:showAsAction="ifRoom" />-->
+
+  <!--  <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_menu_home"
+            android:icon="@mipmap/ic_home_white_48dp"
+            android:title="主页" />
+
+        <item
+            android:id="@+id/nav_menu_categories"
+            android:icon="@mipmap/ic_sort_by_alpha_white_48dp"
+            android:title="分类" />
+
+        <item
+            android:id="@+id/nav_menu_feedback"
+            android:icon="@mipmap/ic_message_white_48dp"
+            android:title="反馈" />
+        <item
+            android:id="@+id/nav_menu_setting"
+            android:icon="@mipmap/ic_settings_white_48dp"
+            android:title="设置" />
+
+    </group>-->
+</menu>

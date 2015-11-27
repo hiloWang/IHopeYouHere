@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.NoActionBar">
+        <!-- 由于使用 toolbar 所以 actionbar 要禁止显示 -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- 布局的内容延伸到状态栏 -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!-- 状态栏颜色-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:progress_btn="http://schemas.android.com/apk/res-auto"
+                xmlns:materialdesign="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/bProgressDialog"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="120dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardCornerRadius="4dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Click this card to show G+ Progress Dialog"/>
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" android:layout_below="@id/bProgressDialog"
+                  android:layout_centerInParent="true"
+                  android:orientation="vertical">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout android:layout_width="wrap_content"
+                        android:layout_height="52dp"
+                        android:layout_centerInParent="true">
+
+            <com.hilo.views.CheckBox.CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="#1E88E5"
+                materialdesign:check="true"/>
+        </RelativeLayout>
+
+        <com.hilo.views.Button.CircularProgressButton
+            android:id="@+id/circularButton1"
+            android:layout_width="196dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/cpb_white"
+            android:textSize="18sp"
+            progress_btn:cpb_textComplete="@string/Complete"
+            progress_btn:cpb_textError="@string/Error"
+            progress_btn:cpb_textIdle="@string/Upload" />
+
+        <com.hilo.views.Button.CircularProgressButton
+            android:id="@+id/circularButton2"
+            android:layout_width="196dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/cpb_white"
+            android:textSize="18sp"
+            progress_btn:cpb_textComplete="@string/Complete"
+            progress_btn:cpb_textError="@string/Error"
+            progress_btn:cpb_textIdle="@string/Upload" />
+    </LinearLayout>
+
+
+    <RelativeLayout android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp">
+
+        <com.hilo.views.ProgressBar.ProgressBarIndeterminateDeterminate
+            android:id="@+id/progressBarIndeterminateDeterminate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_centerInParent="true"
+            android:background="@color/accent"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="traslucentStatusMargin">25dp</dimen>
+    <dimen name="traslucentPhotoMarginTop">41dp</dimen>
+
+    <dimen name="statusMargin">24dp</dimen>
+    <dimen name="userSpace">188dp</dimen>
+    <dimen name="photoMarginTop">40dp</dimen>
+    <dimen name="fab_press_translation_z">6dp</dimen>
+
+</resources>
