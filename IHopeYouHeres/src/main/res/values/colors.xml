@@ -45,5 +45,12 @@
     <!-- Custom Color -->
     <color name="line">#bfbfbf</color>
     <color name="background">#f0eff5</color>
+    <color name="lightblue">#ADD8E6</color>
+    <!-- 亮蓝色 -->
+    <color name="blueviolet">#8A2BE2</color>
+    <!-- 紫罗兰蓝色 -->
+    <color name="lightskyblue">#87CEFA</color>
+    <!-- 亮天蓝色 -->
+    <color name="bule_title">#10B8F6</color>
 
 </resources>

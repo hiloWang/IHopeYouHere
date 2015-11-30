@@ -1,19 +1,19 @@
 /**
  * toolbar:
- *   setNavigationIcon
-     即设定 up button 的图标，因为 Material 的介面，在 Toolbar这里的 up button样式也就有別于过去的 ActionBar 哦。要留意的是setNavigationIcon需要放在 setSupportActionBar之后才会生效。
-
-     setLogo
-     APP 的图标。
-
-     setTitle
-     主标题。
-
-     setSubtitle
-     副标题。
-
-     setOnMenuItemClickListener
-     设定菜单各按鈕的动作。
+ * setNavigationIcon
+ * 即设定 up button 的图标，因为 Material 的介面，在 Toolbar这里的 up button样式也就有別于过去的 ActionBar 哦。要留意的是setNavigationIcon需要放在 setSupportActionBar之后才会生效。
+ * <p/>
+ * setLogo
+ * APP 的图标。
+ * <p/>
+ * setTitle
+ * 主标题。
+ * <p/>
+ * setSubtitle
+ * 副标题。
+ * <p/>
+ * setOnMenuItemClickListener
+ * 设定菜单各按鈕的动作。
  */
 
 package com.hilo.navigation;
@@ -37,7 +37,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -54,7 +53,6 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -410,12 +408,12 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
         statusBar = (ImageView) findViewById(R.id.statusBar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        //使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
+        /*//使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
         CollapsingToolbarLayout mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
         mCollapsingToolbarLayout.setTitle("IHopeYouHere");
         //通过CollapsingToolbarLayout修改字体颜色
         mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
-        mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.GREEN);//设置收缩后Toolbar上字体的颜色
+        mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.GREEN);//设置收缩后Toolbar上字体的颜色*/
 
         // open drawerArrow animotions
         allowArrowAnimation();
@@ -501,10 +499,10 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
         primaryDarkColor = typedValue.data;
 
         // if device is kitkat
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             TypedArray windowTraslucentAttribute = theme.obtainStyledAttributes(new int[]{android.R.attr.windowTranslucentStatus});
             kitkatTraslucentStatusbar = windowTraslucentAttribute.getBoolean(0, false);
-            if (kitkatTraslucentStatusbar) {
+            if (!kitkatTraslucentStatusbar) {
                 Window window = this.getWindow();
                 window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                         WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -541,6 +539,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
 
         // INIT ACTION BAR
         this.setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_global_menu_feed);
         toolbar.setOnMenuItemClickListener(toolBarOnItemClickListener);
         actionBar = getSupportActionBar();
 
@@ -2068,7 +2067,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
                     msg += "Click Settings";
                     break;
             }
-            if(!msg.equals("")) {
+            if (!msg.equals("")) {
                 Toast.makeText(MaterialNavigationDrawer.this, msg, Toast.LENGTH_SHORT).show();
             }
             return true;
@@ -2110,6 +2109,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
             mSwipeRefreshLayout.setRefreshing(refreshing);
         }
     }
+
     protected void enableDisableSwipeRefresh(boolean enable) {
         if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setEnabled(enable);

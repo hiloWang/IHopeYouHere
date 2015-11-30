@@ -15,6 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/statusBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/statusMargin"
+            android:background="?attr/colorPrimaryDark"/>
+
         <!-- CoordinatorLayout 扩展或者缩小Toolbar或者头部，让主内容区域有更多的空间-->
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/coordinator_container"
@@ -85,12 +91,6 @@
 
                         综上分析：当设置了layout_behavior的控件响应起了CollapsingToolbarLayout中的layout_scrollFlags事件时，ImageView会有视差效果的向上滚动移除屏幕，当开始折叠时CollapsingToolbarLayout的背景色(也就是Toolbar的背景色)就会变为我们设置好的背景色，Toolbar也一直会固定在最顶端。
                     -->
-
-                    <ImageView
-                        android:id="@+id/statusBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/statusMargin"
-                        android:background="?attr/colorPrimaryDark"/>
 
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar"

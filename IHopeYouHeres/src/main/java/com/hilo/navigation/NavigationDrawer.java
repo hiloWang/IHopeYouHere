@@ -18,13 +18,8 @@ import com.hilo.listeners.MaterialSectionListener;
  * <p/>
  * Drscription:
  */
-public class NavigationDrawer extends BaseActivity {
+public class NavigationDrawer {
 
-    @Override
-    public void init(Bundle savedInstanceState) {
-
-
-    }
 
 
 }

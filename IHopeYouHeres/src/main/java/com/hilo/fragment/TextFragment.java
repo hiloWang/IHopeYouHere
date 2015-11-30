@@ -37,7 +37,7 @@ public class TextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_test, container, false);
         Bundle data = this.getArguments();
-        ((MaterialNavigationDrawer) this.getActivity()).getToolbar().setTitle(data.getString("Test"));
+//        ((MaterialNavigationDrawer) this.getActivity()).getToolbar().setTitle(data.getString("Test"));
         mProgressBarIndeterminateDeterminate = (ProgressBarIndeterminateDeterminate) view.findViewById(R.id.progressBarIndeterminateDeterminate);
         progresstimer.start();
 

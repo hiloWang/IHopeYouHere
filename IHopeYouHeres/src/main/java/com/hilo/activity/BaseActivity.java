@@ -67,8 +67,8 @@ public class BaseActivity extends MaterialNavigationDrawer {
         // create sections
         this.addSection(newSection("Section 1", new Section1Fragment()));
         this.addSection(newSection("Section 2", new Section2Fragment()));
-        this.addSection(newSection("Section 3", R.drawable.ic_mic_white_24dp, new FragmentButton()).setSectionColor(Color.parseColor("#9c27b0")));
-        this.addSection(newSection("Section", R.drawable.ic_hotel_grey600_24dp, new FragmentButton()).setSectionColor(Color.parseColor("#03a9f4")));
+        this.addSection(newSection("Section 3", R.drawable.ic_mic_white_24dp, new FragmentButton()).setSectionColor(Color.parseColor("#10B8F6")));
+        this.addSection(newSection("Section", R.drawable.ic_hotel_grey600_24dp, new FragmentButton()).setSectionColor(Color.parseColor("#10B8F6")));
 
         // create bottom section
         this.addBottomSection(newSection("Bottom Section", R.drawable.ic_settings, new Intent(this, Settings.class)));
