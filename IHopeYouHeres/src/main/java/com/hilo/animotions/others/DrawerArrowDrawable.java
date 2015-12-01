@@ -1,4 +1,4 @@
-package com.hilo.animotions;
+package com.hilo.animotions.others;
 
 import android.content.Context;
 import android.graphics.Canvas;

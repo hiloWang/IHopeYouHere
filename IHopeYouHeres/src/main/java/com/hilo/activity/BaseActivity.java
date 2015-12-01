@@ -1,16 +1,24 @@
 package com.hilo.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.hilo.R;
+import com.hilo.animotions.BaseAnimatorSet;
+import com.hilo.animotions.BounceEnter.BounceTopEnter;
+import com.hilo.animotions.SlideExit.SlideBottomExit;
+import com.hilo.dialog.DialogManager;
+import com.hilo.dialog.animdilogs.NormalDialog;
 import com.hilo.fragment.FragmentButton;
 import com.hilo.fragment.Section1Fragment;
 import com.hilo.fragment.Section2Fragment;
 import com.hilo.listeners.MaterialSectionListener;
+import com.hilo.listeners.OnBtnClickL;
 import com.hilo.navigation.MaterialAccount;
 import com.hilo.navigation.MaterialNavigationDrawer;
 import com.hilo.navigation.MaterialSection;
@@ -82,4 +90,35 @@ public class BaseActivity extends MaterialNavigationDrawer {
         return false;
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            final NormalDialog exitDialog = new NormalDialog(mContext);
+            exitDialog.content("亲,真的要走吗?再看会儿吧~(●—●)")
+                    .style(NormalDialog.STYLE_TWO)
+                    .titleTextSize(23)
+                    .btnText("继续逛逛", "残忍退出")
+                    .btnTextColor(Color.parseColor("#383838"), Color.parseColor("#D4D4D4"))
+                    .btnTextSize(16f, 16f)
+                    .showAnim(new BounceTopEnter())
+                    .dismissAnim(new SlideBottomExit())
+                    .show();
+
+            exitDialog.setOnBtnClickL(
+                    new OnBtnClickL() {
+                        @Override
+                        public void onBtnClick() {
+                            exitDialog.dismiss();
+                        }
+                    },
+                    new OnBtnClickL() {
+                        @Override
+                        public void onBtnClick() {
+                            exitDialog.superDismiss();
+                            finish();
+                        }
+                    });
+        }
+        return false;
+    }
 }

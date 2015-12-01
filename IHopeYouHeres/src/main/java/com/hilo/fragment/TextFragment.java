@@ -137,4 +137,6 @@ public class TextFragment extends Fragment {
         });
         widthAnimation.start();
     }
+
+
 }

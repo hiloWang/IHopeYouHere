@@ -18,8 +18,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.Settings" ></activity>
-        <activity android:name=".dialog.ActivityDialog" ></activity>
+        <activity android:name=".activity.Settings" />
+        <activity android:name=".dialog.ActivityDialog" />
+        <activity android:name=".dialog.DialogManager" />
         <activity
             android:name=".dialog.PreferenceActivity"
             android:label="@string/preference_dialogs" />

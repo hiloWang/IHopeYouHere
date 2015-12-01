@@ -15,7 +15,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.util.TypedValue;
@@ -30,11 +33,12 @@ import java.util.Locale;
 
 /**
  * Class containing some static utility methods.
- *
+ * <p>
  * Created by neokree on 06/01/15.
  */
 public class Utils {
-    private Utils() {}
+    private Utils() {
+    }
 
     public static int getDrawerWidth(Resources res) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
@@ -45,9 +49,8 @@ public class Utils {
             } else {
                 return (int) (res.getDisplayMetrics().widthPixels - (56 * res.getDisplayMetrics().density));
             }
-        }
-        else { // for devices without smallestScreenWidthDp reference calculate if device screen is over 600 dp
-            if((res.getDisplayMetrics().widthPixels/res.getDisplayMetrics().density) >= 600 || res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        } else { // for devices without smallestScreenWidthDp reference calculate if device screen is over 600 dp
+            if ((res.getDisplayMetrics().widthPixels / res.getDisplayMetrics().density) >= 600 || res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
                 return (int) (320 * res.getDisplayMetrics().density);
             else
                 return (int) (res.getDisplayMetrics().widthPixels - (56 * res.getDisplayMetrics().density));
@@ -57,9 +60,8 @@ public class Utils {
     public static boolean isTablet(Resources res) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             return res.getConfiguration().smallestScreenWidthDp >= 600;
-        }
-        else { // for devices without smallestScreenWidthDp reference calculate if device screen is over 600
-            return (res.getDisplayMetrics().widthPixels/res.getDisplayMetrics().density) >= 600;
+        } else { // for devices without smallestScreenWidthDp reference calculate if device screen is over 600
+            return (res.getDisplayMetrics().widthPixels / res.getDisplayMetrics().density) >= 600;
 
         }
     }
@@ -80,7 +82,7 @@ public class Utils {
     public static Point getUserPhotoSize(Resources res) {
         int size = (int) (64 * res.getDisplayMetrics().density);
 
-        return new Point(size,size);
+        return new Point(size, size);
     }
 
     public static Point getBackgroundSize(Resources res) {
@@ -88,7 +90,7 @@ public class Utils {
 
         int height = (9 * width) / 16;
 
-        return new Point(width,height);
+        return new Point(width, height);
     }
 
     public static Bitmap getCroppedBitmapDrawable(Bitmap bitmap) {
@@ -113,7 +115,7 @@ public class Utils {
         return output;
     }
 
-    public static Bitmap resizeBitmapFromResource(Resources res, int resId,int reqWidth, int reqHeight) {
+    public static Bitmap resizeBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
 
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -128,7 +130,7 @@ public class Utils {
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
-    public static Bitmap resizeBitmap(Bitmap bitmap, int reqWidth,int reqHeight) {
+    public static Bitmap resizeBitmap(Bitmap bitmap, int reqWidth, int reqHeight) {
         return Bitmap.createScaledBitmap(bitmap, reqWidth, reqHeight, true);
 
     }
@@ -185,19 +187,19 @@ public class Utils {
     /**
      * Convert Dp to Pixel
      */
-    public static int dpToPx(float dp, Resources resources){
+    public static int dpToPx(float dp, Resources resources) {
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
         return (int) px;
     }
 
-    public static int dpToPx(float dp, Activity resources){
+    public static int dpToPx(float dp, Activity resources) {
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getResources().getDisplayMetrics());
         return (int) px;
     }
 
     public static int getRelativeTop(View myView) {
 //	    if (myView.getParent() == myView.getRootView())
-        if(myView.getId() == android.R.id.content)
+        if (myView.getId() == android.R.id.content)
             return myView.getTop();
         else
             return myView.getTop() + getRelativeTop((View) myView.getParent());
@@ -205,13 +207,13 @@ public class Utils {
 
     public static int getRelativeLeft(View myView) {
 //	    if (myView.getParent() == myView.getRootView())
-        if(myView.getId() == android.R.id.content)
+        if (myView.getId() == android.R.id.content)
             return myView.getLeft();
         else
             return myView.getLeft() + getRelativeLeft((View) myView.getParent());
     }
 
-    public static AlertDialog getProgressDialog(Activity activity){
+    public static AlertDialog getProgressDialog(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         final View view = LayoutInflater.from(activity).inflate(
                 R.layout.progress_dialog, null);
@@ -235,18 +237,18 @@ public class Utils {
         return ad;
     }
 
-    private static Animator setRepeatableAnim(Activity activity, View target, final int duration, int animRes){
+    private static Animator setRepeatableAnim(Activity activity, View target, final int duration, int animRes) {
         final Animator anim = AnimatorInflater.loadAnimator(activity, animRes);
         anim.setDuration(duration);
         anim.setTarget(target);
         return anim;
     }
 
-    private static void setListeners(final View target, Animator anim, final Animator animator, final int duration){
+    private static void setListeners(final View target, Animator anim, final Animator animator, final int duration) {
         anim.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animat) {
-                if(target.getVisibility() == View.INVISIBLE){
+                if (target.getVisibility() == View.INVISIBLE) {
                     target.setVisibility(View.VISIBLE);
                 }
                 new Handler().postDelayed(new Runnable() {
@@ -272,6 +274,111 @@ public class Utils {
 
             }
         });
+    }
+
+    public static Drawable cornerDrawable(final int bgColor, float cornerradius) {
+        final GradientDrawable bg = new GradientDrawable();
+        bg.setCornerRadius(cornerradius);
+        bg.setColor(bgColor);
+
+        return bg;
+    }
+
+    public static Drawable cornerDrawable(final int bgColor, float[] cornerradius) {
+        final GradientDrawable bg = new GradientDrawable();
+        bg.setCornerRadii(cornerradius);
+        bg.setColor(bgColor);
+
+        return bg;
+    }
+
+    public static Drawable cornerDrawable(final int bgColor, float[] cornerradius, int borderwidth, int bordercolor) {
+        final GradientDrawable bg = new GradientDrawable();
+        bg.setCornerRadii(cornerradius);
+        bg.setStroke(borderwidth, bordercolor);
+        bg.setColor(bgColor);
+
+        return bg;
+    }
+
+    /**
+     * set btn selector with corner drawable for special position
+     */
+    public static StateListDrawable btnSelector(float radius, int normalColor, int pressColor, int postion) {
+        StateListDrawable bg = new StateListDrawable();
+        Drawable normal = null;
+        Drawable pressed = null;
+
+        if (postion == 0) {// left btn
+            normal = cornerDrawable(normalColor, new float[]{0, 0, 0, 0, 0, 0, radius, radius});
+            pressed = cornerDrawable(pressColor, new float[]{0, 0, 0, 0, 0, 0, radius, radius});
+        } else if (postion == 1) {// right btn
+            normal = cornerDrawable(normalColor, new float[]{0, 0, 0, 0, radius, radius, 0, 0});
+            pressed = cornerDrawable(pressColor, new float[]{0, 0, 0, 0, radius, radius, 0, 0});
+        } else if (postion == -1) {// only one btn
+            normal = cornerDrawable(normalColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
+            pressed = cornerDrawable(pressColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
+        } else if (postion == -2) {// for material dialog
+            normal = cornerDrawable(normalColor, radius);
+            pressed = cornerDrawable(pressColor, radius);
+        }
+
+        bg.addState(new int[]{-android.R.attr.state_pressed}, normal);
+        bg.addState(new int[]{android.R.attr.state_pressed}, pressed);
+        return bg;
+    }
+
+    /**
+     * set ListView item selector with corner drawable for the last position
+     * (ListView的item点击效果,只处理最后一项圆角处理)
+     */
+    public static StateListDrawable listItemSelector(float radius, int normalColor, int pressColor, boolean isLastPostion) {
+        StateListDrawable bg = new StateListDrawable();
+        Drawable normal = null;
+        Drawable pressed = null;
+
+        if (!isLastPostion) {
+            normal = new ColorDrawable(normalColor);
+            pressed = new ColorDrawable(pressColor);
+        } else {
+            normal = cornerDrawable(normalColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
+            pressed = cornerDrawable(pressColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
+        }
+
+        bg.addState(new int[]{-android.R.attr.state_pressed}, normal);
+        bg.addState(new int[]{android.R.attr.state_pressed}, pressed);
+        return bg;
+    }
+
+    /**
+     * set ListView item selector with corner drawable for the first and the last position
+     * (ListView的item点击效果,第一项和最后一项圆角处理)
+     */
+    public static StateListDrawable listItemSelector(float radius, int normalColor, int pressColor, int itemTotalSize,
+                                                     int itemPosition) {
+        StateListDrawable bg = new StateListDrawable();
+        Drawable normal = null;
+        Drawable pressed = null;
+
+        if (itemPosition == 0 && itemPosition == itemTotalSize - 1) {// 只有一项
+            normal = cornerDrawable(normalColor, new float[]{radius, radius, radius, radius, radius, radius, radius,
+                    radius});
+            pressed = cornerDrawable(pressColor, new float[]{radius, radius, radius, radius, radius, radius, radius,
+                    radius});
+        } else if (itemPosition == 0) {
+            normal = cornerDrawable(normalColor, new float[]{radius, radius, radius, radius, 0, 0, 0, 0,});
+            pressed = cornerDrawable(pressColor, new float[]{radius, radius, radius, radius, 0, 0, 0, 0});
+        } else if (itemPosition == itemTotalSize - 1) {
+            normal = cornerDrawable(normalColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
+            pressed = cornerDrawable(pressColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
+        } else {
+            normal = new ColorDrawable(normalColor);
+            pressed = new ColorDrawable(pressColor);
+        }
+
+        bg.addState(new int[]{-android.R.attr.state_pressed}, normal);
+        bg.addState(new int[]{android.R.attr.state_pressed}, pressed);
+        return bg;
     }
 
 }

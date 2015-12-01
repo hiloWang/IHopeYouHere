@@ -24,6 +24,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -82,6 +83,7 @@ import java.util.List;
 @SuppressLint("InflateParams")
 public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivity implements MaterialSectionListener, MaterialAccount.OnAccountDataLoaded, MultiSwipeRefreshLayout.CanChildScrollUpCallback {
 
+    protected Context mContext;
     //    public static final int BOTTOM_SECTION_START = 10000;
     private static final int USER_CHANGE_TRANSITION = 500;
 
@@ -374,6 +376,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
 
         Resources.Theme theme = this.getTheme();
         TypedValue typedValue = new TypedValue();
