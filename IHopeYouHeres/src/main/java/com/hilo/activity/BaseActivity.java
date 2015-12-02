@@ -13,6 +13,7 @@ import com.hilo.animotions.BounceEnter.BounceTopEnter;
 import com.hilo.animotions.SlideExit.SlideBottomExit;
 import com.hilo.dialog.animdilogs.NormalDialog;
 import com.hilo.listeners.OnBtnClickL;
+import com.hilo.others.MyApplication;
 import com.hilo.receiver.ExceptionLoingOutReceiver;
 import com.hilo.util.LogUtils;
 import com.hilo.util.Utils;
@@ -105,7 +106,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (!Utils.isAppOnForeground(mContext)) {
+        if (!Utils.isAppOnForeground(MyApplication.mContext)) {
 
         }
     }

@@ -376,7 +376,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends BaseActivity im
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mContext = this;
         Resources.Theme theme = this.getTheme();
         TypedValue typedValue = new TypedValue();
         theme.resolveAttribute(R.attr.drawerType, typedValue, true);
