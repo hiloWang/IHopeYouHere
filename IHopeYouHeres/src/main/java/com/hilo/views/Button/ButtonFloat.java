@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hilo.R;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
@@ -48,7 +48,7 @@ public class ButtonFloat extends Button {
 		if(drawableIcon != null) {
 			icon.setImageDrawable(drawableIcon);
 		}
-		LayoutParams params = new LayoutParams(Utils.dpToPx(sizeIcon, getResources()),Utils.dpToPx(sizeIcon, getResources()));
+		LayoutParams params = new LayoutParams(UIUtils.dpToPx(sizeIcon, getResources()), UIUtils.dpToPx(sizeIcon, getResources()));
 		params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
 		icon.setLayoutParams(params);
 		addView(icon);		
@@ -56,10 +56,10 @@ public class ButtonFloat extends Button {
 	}
 	
 	protected void setDefaultProperties(){
-		rippleSpeed = Utils.dpToPx(2, getResources());
-		rippleSize = Utils.dpToPx(5, getResources());
-		setMinimumWidth(Utils.dpToPx(sizeRadius*2, getResources()));
-		setMinimumHeight(Utils.dpToPx(sizeRadius*2, getResources()));
+		rippleSpeed = UIUtils.dpToPx(2, getResources());
+		rippleSize = UIUtils.dpToPx(5, getResources());
+		setMinimumWidth(UIUtils.dpToPx(sizeRadius * 2, getResources()));
+		setMinimumHeight(UIUtils.dpToPx(sizeRadius * 2, getResources()));
 		super.background = R.drawable.background_button_float;
 //		super.setDefaultProperties();
 	}
@@ -102,7 +102,7 @@ public class ButtonFloat extends Button {
 				
 				@Override
 				public void run() {
-					showPosition = ViewHelper.getY(ButtonFloat.this) - Utils.dpToPx(24, getResources());
+					showPosition = ViewHelper.getY(ButtonFloat.this) - UIUtils.dpToPx(24, getResources());
 					hidePosition = ViewHelper.getY(ButtonFloat.this) + getHeight() * 3;
 					if(animate){
 						ViewHelper.setY(ButtonFloat.this, hidePosition);
@@ -120,7 +120,7 @@ public class ButtonFloat extends Button {
 		super.onDraw(canvas);
 		if (x != -1) {
 			Rect src = new Rect(0, 0, getWidth(), getHeight());
-			Rect dst = new Rect(Utils.dpToPx(1, getResources()), Utils.dpToPx(2, getResources()), getWidth()-Utils.dpToPx(1, getResources()), getHeight()-Utils.dpToPx(2, getResources()));
+			Rect dst = new Rect(UIUtils.dpToPx(1, getResources()), UIUtils.dpToPx(2, getResources()), getWidth()- UIUtils.dpToPx(1, getResources()), getHeight()- UIUtils.dpToPx(2, getResources()));
 			canvas.drawBitmap(cropCircle(makeCircle()), src, dst, null);
 			invalidate();
 		}

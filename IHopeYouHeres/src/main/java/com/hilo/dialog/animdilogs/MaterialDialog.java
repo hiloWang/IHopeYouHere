@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.hilo.dialog.animdilogs.base.BaseAlertDialog;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 
 /**
  * Dialog like Material Design Dialog
@@ -65,9 +65,9 @@ public class MaterialDialog extends BaseAlertDialog<MaterialDialog> {
         super.setUiBeforShow();
         /**set background color and corner radius */
         float radius = dp2px(cornerRadius_DP);
-        ll_container.setBackgroundDrawable(Utils.cornerDrawable(bgColor, radius));
-        tv_btn_left.setBackgroundDrawable(Utils.btnSelector(radius, bgColor, btnPressColor, -2));
-        tv_btn_right.setBackgroundDrawable(Utils.btnSelector(radius, bgColor, btnPressColor, -2));
-        tv_btn_middle.setBackgroundDrawable(Utils.btnSelector(radius, bgColor, btnPressColor, -2));
+        ll_container.setBackgroundDrawable(UIUtils.cornerDrawable(bgColor, radius));
+        tv_btn_left.setBackgroundDrawable(UIUtils.btnSelector(radius, bgColor, btnPressColor, -2));
+        tv_btn_right.setBackgroundDrawable(UIUtils.btnSelector(radius, bgColor, btnPressColor, -2));
+        tv_btn_middle.setBackgroundDrawable(UIUtils.btnSelector(radius, bgColor, btnPressColor, -2));
     }
 }

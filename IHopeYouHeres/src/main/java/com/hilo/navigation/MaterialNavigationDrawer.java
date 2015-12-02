@@ -62,12 +62,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hilo.R;
+import com.hilo.activity.BaseActivity;
 import com.hilo.listeners.MaterialAccountListener;
 import com.hilo.listeners.MaterialSectionListener;
 import com.hilo.util.MaterialActionBarDrawerToggle;
 import com.hilo.util.MaterialDrawerLayout;
 import com.hilo.util.TypefaceManager;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 import com.hilo.views.widgets.MultiSwipeRefreshLayout;
 
 import java.util.ArrayList;
@@ -81,9 +82,8 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @SuppressLint("InflateParams")
-public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivity implements MaterialSectionListener, MaterialAccount.OnAccountDataLoaded, MultiSwipeRefreshLayout.CanChildScrollUpCallback {
+public abstract class MaterialNavigationDrawer<Fragment> extends BaseActivity implements MaterialSectionListener, MaterialAccount.OnAccountDataLoaded, MultiSwipeRefreshLayout.CanChildScrollUpCallback {
 
-    protected Context mContext;
     //    public static final int BOTTOM_SECTION_START = 10000;
     private static final int USER_CHANGE_TRANSITION = 500;
 
@@ -300,7 +300,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
                     divisor.setBackgroundColor(Color.parseColor("#8f8f8f"));
 
                     // si aggiungono le bottom sections
-                    if (heightDrawer >= Utils.getScreenHeight(MaterialNavigationDrawer.this)) {
+                    if (heightDrawer >= UIUtils.getScreenHeight(MaterialNavigationDrawer.this)) {
 
                         LinearLayout.LayoutParams paramDivisor = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
                         paramDivisor.setMargins(0, (int) (8 * density), 0, (int) (8 * density));
@@ -376,7 +376,6 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = this;
 
         Resources.Theme theme = this.getTheme();
         TypedValue typedValue = new TypedValue();
@@ -492,7 +491,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
 
         // set the right drawer width
         DrawerLayout.LayoutParams drawerParams = (DrawerLayout.LayoutParams) drawer.getLayoutParams();
-        drawerParams.width = Utils.getDrawerWidth(resources);
+        drawerParams.width = UIUtils.getDrawerWidth(resources);
         drawer.setLayoutParams(drawerParams);
 
         // get primary color
@@ -678,7 +677,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
                 divisor.setBackgroundColor(Color.parseColor("#8f8f8f"));
 
                 // si aggiungono le bottom sections
-                if (heightDrawer >= Utils.getScreenHeight(MaterialNavigationDrawer.this)) {
+                if (heightDrawer >= UIUtils.getScreenHeight(MaterialNavigationDrawer.this)) {
 
                     // add the divisor to the section view
                     LinearLayout.LayoutParams paramDivisor = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
@@ -1217,9 +1216,9 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
 
 
             // Se il dispositivo usa un linguaggio RTL si rimuove l'offset della parte a sinistra dello schermo
-            if (Utils.isRTL()) {
+            if (UIUtils.isRTL()) {
                 // si rimuove dal conteggio la parte a sinistra del drawer.
-                int leftOffset = resources.getDisplayMetrics().widthPixels - Utils.getDrawerWidth(resources);
+                int leftOffset = resources.getDisplayMetrics().widthPixels - UIUtils.getDrawerWidth(resources);
 
                 startingRect.left -= leftOffset;
                 finalRect.left -= leftOffset;
@@ -1298,7 +1297,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends AppCompatActivi
     }
 
     private boolean deviceSupportMultiPane() {
-        if (multiPaneSupport && resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && Utils.isTablet(resources))
+        if (multiPaneSupport && resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && UIUtils.isTablet(resources))
             return true;
         else
             return false;

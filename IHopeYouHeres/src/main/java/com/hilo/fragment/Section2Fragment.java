@@ -12,7 +12,6 @@ import android.widget.Button;
 import com.hilo.R;
 import com.hilo.navigation.MaterialNavigationDrawer;
 import com.hilo.views.Button.ButtonFloat;
-import com.hilo.views.widgets.MultiSwipeRefreshLayout;
 
 /**
  * Created by hilo on 15/11/25.

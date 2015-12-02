@@ -14,7 +14,7 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 
 import com.hilo.R;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 import com.hilo.views.CustomView;
 
 public abstract class Button extends CustomView {
@@ -46,8 +46,8 @@ public abstract class Button extends CustomView {
 
     protected void setDefaultProperties() {
         // Min size
-        setMinimumHeight(Utils.dpToPx(minHeight, getResources()));
-        setMinimumWidth(Utils.dpToPx(minWidth, getResources()));
+        setMinimumHeight(UIUtils.dpToPx(minHeight, getResources()));
+        setMinimumWidth(UIUtils.dpToPx(minWidth, getResources()));
         // Background shape
         setBackgroundResource(background);
         setBackgroundColor(backgroundColor);
@@ -118,8 +118,8 @@ public abstract class Button extends CustomView {
 
     public Bitmap makeCircle() {
         Bitmap output = Bitmap.createBitmap(
-                getWidth() - Utils.dpToPx(6, getResources()), getHeight()
-                        - Utils.dpToPx(7, getResources()), Config.ARGB_8888);
+                getWidth() - UIUtils.dpToPx(6, getResources()), getHeight()
+                        - UIUtils.dpToPx(7, getResources()), Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
         canvas.drawARGB(0, 0, 0, 0);
         Paint paint = new Paint();

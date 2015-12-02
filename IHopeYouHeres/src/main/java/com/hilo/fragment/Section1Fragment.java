@@ -13,10 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hilo.R;
-import com.hilo.activity.BaseActivity;
 import com.hilo.adapter.FeedAdapter;
 import com.hilo.dialog.DialogManager;
-import com.hilo.views.Button.widgets.ScrollDirectionListener;
 import com.hilo.views.widgets.MultiSwipeRefreshLayout;
 
 /**
@@ -61,12 +59,10 @@ public class Section1Fragment extends Fragment implements MultiSwipeRefreshLayou
        fab_custom.attachToListView(mRecyclerView, new ScrollDirectionListener() {
             @Override
             public void onScrollDown() {
-
             }
 
             @Override
             public void onScrollUp() {
-
             }
         });*/
 
@@ -74,7 +70,7 @@ public class Section1Fragment extends Fragment implements MultiSwipeRefreshLayou
         fab_custom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               DialogManager.getInstance().NormalListDialogAdapter(getActivity());
+                DialogManager.getInstance().ActionSheetDialog(getActivity());
             }
         });
 

@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.hilo.R;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 import com.hilo.views.CustomView;
 
 public class ProgressBarDeterminate extends CustomView {
@@ -55,7 +55,7 @@ public class ProgressBarDeterminate extends CustomView {
 			max = attrs.getAttributeIntValue(MATERIALDESIGNXML,"max", 100);
 			progress = attrs.getAttributeIntValue(MATERIALDESIGNXML,"progress", min);
 			
-			setMinimumHeight(Utils.dpToPx(3, getResources()));
+			setMinimumHeight(UIUtils.dpToPx(3, getResources()));
 			
 			post(new Runnable() {
 				

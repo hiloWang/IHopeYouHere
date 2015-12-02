@@ -42,7 +42,7 @@ public class MaterialDrawerLayout extends DrawerLayout {
     }
 
     public void setMultipaneSupport(boolean support) {
-        if(Utils.isTablet(this.getResources())) {
+        if(UIUtils.isTablet(this.getResources())) {
             // custom implementation only for tablets
             multipaneSupport = support;
         }

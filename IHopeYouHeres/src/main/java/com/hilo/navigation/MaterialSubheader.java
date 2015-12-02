@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hilo.R;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 
 /**
  * Created by neokree on 17/01/15.
@@ -41,7 +41,7 @@ public class MaterialSubheader {
 
         // inflate the text
         text = new TextView(ctx);
-        Utils.setAlpha(text, 0.54f);
+        UIUtils.setAlpha(text, 0.54f);
         text.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
         text.setGravity(Gravity.START);
         LinearLayout.LayoutParams paramsText = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

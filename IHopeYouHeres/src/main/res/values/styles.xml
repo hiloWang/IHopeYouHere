@@ -29,9 +29,9 @@
     <!-- Mocked Account 使用material主题的时候，必须设定targetSdkVersion = 21，否则界面看起来是模糊的 -->
     <style name="MockedAccountLight" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar">
         <!-- Actionbar color -->
-        <item name="colorPrimary">@color/bule_title</item>
+        <item name="colorPrimary">#FF80AB</item>
         <!--Status bar color-->
-        <item name="colorPrimaryDark">#8810B8F6</item>
+        <item name="colorPrimaryDark">#80FF80AB</item>
         <!-- Status bar color API 21 -->
         <!--<item name="android:statusBarColor">#FF80AB</item>-->
         <!--Window color-->

@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hilo.R;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 import com.hilo.views.CustomView;
 
 
@@ -45,8 +45,8 @@ public class CheckBox extends CustomView {
 		setBackgroundResource(R.drawable.background_checkbox);
 
 		// Set size of view
-		setMinimumHeight(Utils.dpToPx(48, getResources()));
-		setMinimumWidth(Utils.dpToPx(48, getResources()));
+		setMinimumHeight(UIUtils.dpToPx(48, getResources()));
+		setMinimumWidth(UIUtils.dpToPx(48, getResources()));
 
 		// Set background Color
 		// Color by resource
@@ -77,8 +77,8 @@ public class CheckBox extends CustomView {
 
 		checkView = new Check(getContext());
         checkView.setId(View.generateViewId());
-		LayoutParams params = new LayoutParams(Utils.dpToPx(20,
-				getResources()), Utils.dpToPx(20, getResources()));
+		LayoutParams params = new LayoutParams(UIUtils.dpToPx(20,
+				getResources()), UIUtils.dpToPx(20, getResources()));
 		params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
 		checkView.setLayoutParams(params);
 		addView(checkView);

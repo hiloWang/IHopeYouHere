@@ -2,13 +2,9 @@ package com.hilo.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ExpandableListView;
 
 import com.hilo.R;
 import com.hilo.adapter.TestDialogAdapter;
@@ -23,7 +19,6 @@ import com.hilo.dialog.animdilogs.NormalListDialog;
 import com.hilo.listeners.OnBtnClickL;
 import com.hilo.listeners.OnOperItemClickL;
 import com.hilo.util.T;
-import com.hilo.util.ViewFindUtils;
 
 import java.util.ArrayList;
 
@@ -32,14 +27,12 @@ import java.util.ArrayList;
  * <p/>
  * Drscription:
  */
-public class DialogManager implements ExpandableListView.OnChildClickListener {
+public class DialogManager {
 
     private static DialogManager mDialogManager;
     public BaseAnimatorSet bas_in, bas_out;
-    public ExpandableListView elv;
     public ArrayList<DialogMenuItem> testItems = new ArrayList<>();
     public String[] stringItems = {"收藏", "下载", "分享", "删除", "歌手", "专辑"};
-    public String[] groups = {"Default Inner Dialog", "Custom Dialog", "Default Inner Anim", "Custom Anim"};
 
     public DialogManager() {
         bas_in = new BounceTopEnter();
@@ -408,10 +401,5 @@ public class DialogManager implements ExpandableListView.OnChildClickListener {
                 dialog.dismiss();
             }
         });
-    }
-
-    @Override
-    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-        return false;
     }
 }

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.hilo.dialog.animdilogs.base.BaseAlertDialog;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 
 @SuppressWarnings("deprecation")
 public class NormalDialog extends BaseAlertDialog<NormalDialog> {
@@ -136,10 +136,10 @@ public class NormalDialog extends BaseAlertDialog<NormalDialog> {
 
         /**set background color and corner radius */
         float radius = dp2px(cornerRadius_DP);
-        ll_container.setBackgroundDrawable(Utils.cornerDrawable(bgColor, radius));
-        tv_btn_left.setBackgroundDrawable(Utils.btnSelector(radius, bgColor, btnPressColor, 0));
-        tv_btn_right.setBackgroundDrawable(Utils.btnSelector(radius, bgColor, btnPressColor, 1));
-        tv_btn_middle.setBackgroundDrawable(Utils.btnSelector(btnNum == 1 ? radius : 0, bgColor, btnPressColor, -1));
+        ll_container.setBackgroundDrawable(UIUtils.cornerDrawable(bgColor, radius));
+        tv_btn_left.setBackgroundDrawable(UIUtils.btnSelector(radius, bgColor, btnPressColor, 0));
+        tv_btn_right.setBackgroundDrawable(UIUtils.btnSelector(radius, bgColor, btnPressColor, 1));
+        tv_btn_middle.setBackgroundDrawable(UIUtils.btnSelector(btnNum == 1 ? radius : 0, bgColor, btnPressColor, -1));
     }
 
     // --->属性设置

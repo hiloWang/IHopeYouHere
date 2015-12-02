@@ -1,384 +1,290 @@
 package com.hilo.util;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
-import android.os.Build;
-import android.os.Handler;
-import android.util.TypedValue;
-import android.view.Display;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.animation.AlphaAnimation;
+import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Environment;
+import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.hilo.R;
+import com.hilo.activity.BaseActivity;
+import com.hilo.activity.LoginActivity;
+import com.hilo.data.Fields;
+import com.hilo.others.Configuration;
+import com.hilo.others.MyApplication;
+import com.hilo.requesthttp.HttpClient;
+import com.hilo.requesthttp.ReqParam;
 
-import java.util.Locale;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
- * Class containing some static utility methods.
- * <p>
- * Created by neokree on 06/01/15.
+ * Created by hilo on 15/12/1.
+ * <p/>
+ * Drscription:
  */
 public class Utils {
-    private Utils() {
-    }
-
-    public static int getDrawerWidth(Resources res) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-
-            if (res.getConfiguration().smallestScreenWidthDp >= 600 || res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                // device is a tablet
-                return (int) (320 * res.getDisplayMetrics().density);
-            } else {
-                return (int) (res.getDisplayMetrics().widthPixels - (56 * res.getDisplayMetrics().density));
-            }
-        } else { // for devices without smallestScreenWidthDp reference calculate if device screen is over 600 dp
-            if ((res.getDisplayMetrics().widthPixels / res.getDisplayMetrics().density) >= 600 || res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-                return (int) (320 * res.getDisplayMetrics().density);
-            else
-                return (int) (res.getDisplayMetrics().widthPixels - (56 * res.getDisplayMetrics().density));
-        }
-    }
-
-    public static boolean isTablet(Resources res) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            return res.getConfiguration().smallestScreenWidthDp >= 600;
-        } else { // for devices without smallestScreenWidthDp reference calculate if device screen is over 600
-            return (res.getDisplayMetrics().widthPixels / res.getDisplayMetrics().density) >= 600;
-
-        }
-    }
-
-    public static int getScreenHeight(Activity act) {
-        int height = 0;
-        Display display = act.getWindowManager().getDefaultDisplay();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            Point size = new Point();
-            display.getSize(size);
-            height = size.y;
-        } else {
-            height = display.getHeight();  // deprecated
-        }
-        return height;
-    }
-
-    public static Point getUserPhotoSize(Resources res) {
-        int size = (int) (64 * res.getDisplayMetrics().density);
-
-        return new Point(size, size);
-    }
-
-    public static Point getBackgroundSize(Resources res) {
-        int width = getDrawerWidth(res);
-
-        int height = (9 * width) / 16;
-
-        return new Point(width, height);
-    }
-
-    public static Bitmap getCroppedBitmapDrawable(Bitmap bitmap) {
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
-
-        final int color = 0xff424242;
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-
-        paint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(color);
-        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
-                bitmap.getWidth() / 2, paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
-        //return _bmp;
-        return output;
-    }
-
-    public static Bitmap resizeBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
-
-    public static Bitmap resizeBitmap(Bitmap bitmap, int reqWidth, int reqHeight) {
-        return Bitmap.createScaledBitmap(bitmap, reqWidth, reqHeight, true);
-
-    }
-
-    public static int calculateSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) > reqHeight
-                    && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
-
-    public static void recycleDrawable(Drawable drawable) {
-        if (drawable instanceof BitmapDrawable) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            bitmapDrawable.getBitmap().recycle();
-        }
-    }
-
-    public static boolean isRTL() {
-        Locale defLocale = Locale.getDefault();
-        final int directionality = Character.getDirectionality(defLocale.getDisplayName().charAt(0));
-        return directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT ||
-                directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC;
-    }
-
-    public static void setAlpha(View v, float alpha) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            v.setAlpha(alpha);
-        } else {
-            AlphaAnimation animation = new AlphaAnimation(alpha, alpha);
-            animation.setDuration(0);
-            animation.setFillAfter(true);
-            v.startAnimation(animation);
-        }
-    }
-
 
     /**
-     * Convert Dp to Pixel
+     * 判断当前应用是否处于debug状态
      */
-    public static int dpToPx(float dp, Resources resources) {
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
-        return (int) px;
+    public static boolean isApkDebugable(Context context) {
+        boolean flag = false;
+        try {
+            if (null != context) {
+                ApplicationInfo info = context.getApplicationInfo();
+                flag = (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
     }
 
-    public static int dpToPx(float dp, Activity resources) {
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getResources().getDisplayMetrics());
-        return (int) px;
-    }
-
-    public static int getRelativeTop(View myView) {
-//	    if (myView.getParent() == myView.getRootView())
-        if (myView.getId() == android.R.id.content)
-            return myView.getTop();
-        else
-            return myView.getTop() + getRelativeTop((View) myView.getParent());
-    }
-
-    public static int getRelativeLeft(View myView) {
-//	    if (myView.getParent() == myView.getRootView())
-        if (myView.getId() == android.R.id.content)
-            return myView.getLeft();
-        else
-            return myView.getLeft() + getRelativeLeft((View) myView.getParent());
-    }
-
-    public static AlertDialog getProgressDialog(Activity activity) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        final View view = LayoutInflater.from(activity).inflate(
-                R.layout.progress_dialog, null);
-        View img1 = view.findViewById(R.id.pd_circle1);
-        View img2 = view.findViewById(R.id.pd_circle2);
-        View img3 = view.findViewById(R.id.pd_circle3);
-        int ANIMATION_DURATION = 400;
-        Animator anim1 = setRepeatableAnim(activity, img1, ANIMATION_DURATION, R.animator.growndisappear);
-        Animator anim2 = setRepeatableAnim(activity, img2, ANIMATION_DURATION, R.animator.growndisappear);
-        Animator anim3 = setRepeatableAnim(activity, img3, ANIMATION_DURATION, R.animator.growndisappear);
-        setListeners(img1, anim1, anim2, ANIMATION_DURATION);
-        setListeners(img2, anim2, anim3, ANIMATION_DURATION);
-        setListeners(img3, anim3, anim1, ANIMATION_DURATION);
-        anim1.start();
-        builder.setView(view);
-        AlertDialog ad = builder.create();
-        ad.setCanceledOnTouchOutside(false);
-        ad.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
-        ad.show();
-        ad.getWindow().setLayout(dpToPx(200, activity), dpToPx(125, activity));
-        return ad;
-    }
-
-    private static Animator setRepeatableAnim(Activity activity, View target, final int duration, int animRes) {
-        final Animator anim = AnimatorInflater.loadAnimator(activity, animRes);
-        anim.setDuration(duration);
-        anim.setTarget(target);
-        return anim;
-    }
-
-    private static void setListeners(final View target, Animator anim, final Animator animator, final int duration) {
-        anim.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animat) {
-                if (target.getVisibility() == View.INVISIBLE) {
-                    target.setVisibility(View.VISIBLE);
+    public static Gson getGsonInstance() {
+        Gson gson = null;
+        if (gson == null) {
+            synchronized (Utils.class) {
+                if (gson == null) {
+                    gson = new Gson();
                 }
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        animator.start();
-                    }
-                }, duration - 100);
             }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        });
-    }
-
-    public static Drawable cornerDrawable(final int bgColor, float cornerradius) {
-        final GradientDrawable bg = new GradientDrawable();
-        bg.setCornerRadius(cornerradius);
-        bg.setColor(bgColor);
-
-        return bg;
-    }
-
-    public static Drawable cornerDrawable(final int bgColor, float[] cornerradius) {
-        final GradientDrawable bg = new GradientDrawable();
-        bg.setCornerRadii(cornerradius);
-        bg.setColor(bgColor);
-
-        return bg;
-    }
-
-    public static Drawable cornerDrawable(final int bgColor, float[] cornerradius, int borderwidth, int bordercolor) {
-        final GradientDrawable bg = new GradientDrawable();
-        bg.setCornerRadii(cornerradius);
-        bg.setStroke(borderwidth, bordercolor);
-        bg.setColor(bgColor);
-
-        return bg;
+        }
+        return gson;
     }
 
     /**
-     * set btn selector with corner drawable for special position
+     * 获取版本号
+     *
+     * @return 当前应用的版本号
      */
-    public static StateListDrawable btnSelector(float radius, int normalColor, int pressColor, int postion) {
-        StateListDrawable bg = new StateListDrawable();
-        Drawable normal = null;
-        Drawable pressed = null;
-
-        if (postion == 0) {// left btn
-            normal = cornerDrawable(normalColor, new float[]{0, 0, 0, 0, 0, 0, radius, radius});
-            pressed = cornerDrawable(pressColor, new float[]{0, 0, 0, 0, 0, 0, radius, radius});
-        } else if (postion == 1) {// right btn
-            normal = cornerDrawable(normalColor, new float[]{0, 0, 0, 0, radius, radius, 0, 0});
-            pressed = cornerDrawable(pressColor, new float[]{0, 0, 0, 0, radius, radius, 0, 0});
-        } else if (postion == -1) {// only one btn
-            normal = cornerDrawable(normalColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
-            pressed = cornerDrawable(pressColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
-        } else if (postion == -2) {// for material dialog
-            normal = cornerDrawable(normalColor, radius);
-            pressed = cornerDrawable(pressColor, radius);
+    public static String getVersion() {
+        try {
+            PackageManager manager = MyApplication.mContext.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(MyApplication.mContext.getPackageName(), 0);
+            return info.versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-
-        bg.addState(new int[]{-android.R.attr.state_pressed}, normal);
-        bg.addState(new int[]{android.R.attr.state_pressed}, pressed);
-        return bg;
     }
 
     /**
-     * set ListView item selector with corner drawable for the last position
-     * (ListView的item点击效果,只处理最后一项圆角处理)
+     * 获取当前应用的版本号
      */
-    public static StateListDrawable listItemSelector(float radius, int normalColor, int pressColor, boolean isLastPostion) {
-        StateListDrawable bg = new StateListDrawable();
-        Drawable normal = null;
-        Drawable pressed = null;
-
-        if (!isLastPostion) {
-            normal = new ColorDrawable(normalColor);
-            pressed = new ColorDrawable(pressColor);
-        } else {
-            normal = cornerDrawable(normalColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
-            pressed = cornerDrawable(pressColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
-        }
-
-        bg.addState(new int[]{-android.R.attr.state_pressed}, normal);
-        bg.addState(new int[]{android.R.attr.state_pressed}, pressed);
-        return bg;
+    public static String getVersionName(Context context) throws Exception {
+        // 获取packagemanager的实例
+        PackageManager packageManager = context.getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+        return packInfo.versionName;
     }
 
     /**
-     * set ListView item selector with corner drawable for the first and the last position
-     * (ListView的item点击效果,第一项和最后一项圆角处理)
+     * 发布版本
      */
-    public static StateListDrawable listItemSelector(float radius, int normalColor, int pressColor, int itemTotalSize,
-                                                     int itemPosition) {
-        StateListDrawable bg = new StateListDrawable();
-        Drawable normal = null;
-        Drawable pressed = null;
-
-        if (itemPosition == 0 && itemPosition == itemTotalSize - 1) {// 只有一项
-            normal = cornerDrawable(normalColor, new float[]{radius, radius, radius, radius, radius, radius, radius,
-                    radius});
-            pressed = cornerDrawable(pressColor, new float[]{radius, radius, radius, radius, radius, radius, radius,
-                    radius});
-        } else if (itemPosition == 0) {
-            normal = cornerDrawable(normalColor, new float[]{radius, radius, radius, radius, 0, 0, 0, 0,});
-            pressed = cornerDrawable(pressColor, new float[]{radius, radius, radius, radius, 0, 0, 0, 0});
-        } else if (itemPosition == itemTotalSize - 1) {
-            normal = cornerDrawable(normalColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
-            pressed = cornerDrawable(pressColor, new float[]{0, 0, 0, 0, radius, radius, radius, radius});
-        } else {
-            normal = new ColorDrawable(normalColor);
-            pressed = new ColorDrawable(pressColor);
-        }
-
-        bg.addState(new int[]{-android.R.attr.state_pressed}, normal);
-        bg.addState(new int[]{android.R.attr.state_pressed}, pressed);
-        return bg;
+    public static String getVersionRelease() {
+        return android.os.Build.VERSION.RELEASE;
     }
 
+    /**
+     * 格式化 当前 系统 时间
+     */
+    @SuppressLint("SimpleDateFormat")
+    public static String formatCurrentDate() {
+        String str = null;
+        try {
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
+            str = sdf.format(new Date());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    /**
+     * 退出 app
+     *
+     * @param context 上下文
+     */
+    public static void appLogout(Context context) {
+        BaseActivity.exitApp();
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.putExtra(Fields.I_LOGOUT, true);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 异常或者其他问题退出到登录界面
+     */
+    public static void sendbroadcastToLogin() {
+//        if (!LoginActivity.isLoginActivityShow) {
+//            Intent mIntent = new Intent("android.exception.ExceptionLoingOutReceiver");
+//            SpdApplication.mContext.sendBroadcast(mIntent);
+//        }
+    }
+
+    /**
+     * 置空 静态 变量 ; 退出登录 或 强制退出 时 调用
+     */
+    public static void setAllStaticVarsNull() {
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 判断app 当前是否处于前台运行状态
+     *
+     * @param context 上下文
+     * @return 返回false则为后台, otherwise
+     */
+    public static boolean isAppOnForeground(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        String packageName = context.getApplicationContext().getPackageName();
+
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager
+                .getRunningAppProcesses();
+        if (appProcesses == null)
+            return false;
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            // The name of the process that this object is associated with.
+            if (appProcess.processName.equals(packageName)
+                    && appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 转Base64码 字符串
+     */
+    public static String base64String(String s) {
+        String result = null;
+        if (!TextUtils.isEmpty(s)) {
+            try {
+                result = android.util.Base64.encodeToString(s.getBytes("UTF-8"), android.util.Base64.NO_WRAP);
+                // 特殊字符 / + = 替换成_a _b _c
+                if (result != null) {
+                    result = result.replaceAll("/", "_a");
+                    result = result.replaceAll("\\+", "_b");
+                    result = result.replaceAll("=", "_c");
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 判断SD是否存在
+     *
+     * @return
+     */
+    public static boolean isSdcardExist() {
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 获取单个文件的MD5值！
+     *
+     * @param file
+     * @return
+     */
+    public static String getFileMD5(File file) {
+        if (!file.isFile()) {
+            return null;
+        }
+        MessageDigest digest = null;
+        FileInputStream in = null;
+        byte buffer[] = new byte[1024];
+        int len;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+            in = new FileInputStream(file);
+            while ((len = in.read(buffer, 0, 1024)) != -1) {
+                digest.update(buffer, 0, len);
+            }
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        BigInteger bigInt = new BigInteger(1, digest.digest());
+        return bigInt.toString(16);
+    }
+
+
+    public static String getFileName(String pathfile) {
+        int pos = pathfile.lastIndexOf("/");
+        if (pos > 0) {
+            return pathfile.substring(pos + 1);
+        }
+        return pathfile;
+    }
+
+    /**
+     * 是否 是平板
+     */
+    public static boolean isTablet(Context context) {
+        return context.getResources().getBoolean(R.bool.isTablet);
+    }
+
+    /**
+     * json 转 实体 对象
+     */
+    public static <T> T parseFromJson(String jsonData, Class<T> classOfT) {
+        T t = null;
+        try {
+            if (!TextUtils.isEmpty(jsonData) && classOfT != null) {
+                Gson gson = getGsonInstance();
+                t = gson.fromJson(jsonData, classOfT);
+            }
+
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+        }
+        return t;
+    }
+
+    public static String parseToJson(Object obj) {
+        Gson gson = new Gson();
+        return gson.toJson(obj);
+    }
+
+    /**
+     * Server Url
+     *
+     * @param reqParam ReqParam.XX
+     * @param code     userSign
+     * @return Server Url
+     */
+    public static String getTokenUrl(ReqParam reqParam, String code) {
+        String token = HttpClient.createToken(reqParam, code);
+        return Configuration.getConfig().serverAddress + reqParam.cmd + Configuration.getConfig().sessionKey + "/" + Integer.parseInt(code) + "/" + token;
+    }
 }

@@ -12,15 +12,14 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.hilo.R;
-import com.hilo.navigation.MaterialNavigationDrawer;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 import com.hilo.views.Button.CircularProgressButton;
 import com.hilo.views.ProgressBar.ProgressBarIndeterminateDeterminate;
 
 
 /**
  * Created by hilo on 15/11/25.
- * <p>
+ * <p/>
  * Drscription:
  */
 public class TextFragment extends Fragment {
@@ -51,7 +50,7 @@ public class TextFragment extends Fragment {
         view.findViewById(R.id.bProgressDialog).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.getProgressDialog(getActivity());
+                UIUtils.getProgressDialog(getActivity());
             }
         });
 

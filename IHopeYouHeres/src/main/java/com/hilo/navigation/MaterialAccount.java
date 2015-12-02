@@ -11,7 +11,7 @@ import android.os.AsyncTask;
 import android.view.View;
 
 import com.hilo.listeners.MaterialSectionListener;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 
 /**
  * Created by neokree on 11/12/14.
@@ -184,9 +184,9 @@ public class MaterialAccount {
     // custom
 
     public void recycle() {
-        Utils.recycleDrawable(photo);
-        Utils.recycleDrawable(circularPhoto);
-        Utils.recycleDrawable(background);
+        UIUtils.recycleDrawable(photo);
+        UIUtils.recycleDrawable(circularPhoto);
+        UIUtils.recycleDrawable(background);
     }
 
     public interface OnAccountDataLoaded {
@@ -202,11 +202,11 @@ public class MaterialAccount {
 
         @Override
         protected BitmapDrawable doInBackground(Integer... params) {
-            Point photoSize = Utils.getUserPhotoSize(resources);
+            Point photoSize = UIUtils.getUserPhotoSize(resources);
 
-            Bitmap photo = Utils.resizeBitmapFromResource(resources,params[0],photoSize.x,photoSize.y);
+            Bitmap photo = UIUtils.resizeBitmapFromResource(resources, params[0], photoSize.x, photoSize.y);
 
-            circularPhoto = new BitmapDrawable(resources,Utils.getCroppedBitmapDrawable(photo));
+            circularPhoto = new BitmapDrawable(resources, UIUtils.getCroppedBitmapDrawable(photo));
             return new BitmapDrawable(resources,photo);
         }
 
@@ -223,13 +223,13 @@ public class MaterialAccount {
 
         @Override
         protected BitmapDrawable doInBackground(Bitmap... params) {
-            Point photoSize = Utils.getUserPhotoSize(resources);
+            Point photoSize = UIUtils.getUserPhotoSize(resources);
 
 
-            Bitmap photo = Utils.resizeBitmap(params[0],photoSize.x,photoSize.y);
+            Bitmap photo = UIUtils.resizeBitmap(params[0], photoSize.x, photoSize.y);
 //            params[0].recycle();
 
-            circularPhoto = new BitmapDrawable(resources,Utils.getCroppedBitmapDrawable(photo));
+            circularPhoto = new BitmapDrawable(resources, UIUtils.getCroppedBitmapDrawable(photo));
             return new BitmapDrawable(resources,photo);
         }
 
@@ -245,9 +245,9 @@ public class MaterialAccount {
     private class ResizeBackgroundResource extends AsyncTask<Integer, Void, BitmapDrawable> {
         @Override
         protected BitmapDrawable doInBackground(Integer... params) {
-            Point backSize = Utils.getBackgroundSize(resources);
+            Point backSize = UIUtils.getBackgroundSize(resources);
 
-            Bitmap back = Utils.resizeBitmapFromResource(resources,params[0],backSize.x,backSize.y);
+            Bitmap back = UIUtils.resizeBitmapFromResource(resources, params[0], backSize.x, backSize.y);
 
             return new BitmapDrawable(resources,back);
         }
@@ -265,9 +265,9 @@ public class MaterialAccount {
 
         @Override
         protected BitmapDrawable doInBackground(Bitmap... params) {
-            Point backSize = Utils.getBackgroundSize(resources);
+            Point backSize = UIUtils.getBackgroundSize(resources);
 
-            Bitmap back = Utils.resizeBitmap(params[0],backSize.x,backSize.y);
+            Bitmap back = UIUtils.resizeBitmap(params[0], backSize.x, backSize.y);
 //            params[0].recycle();
 
             return new BitmapDrawable(resources,back);

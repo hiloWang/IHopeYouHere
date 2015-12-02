@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.hilo.dialog.animdilogs.base.BaseDialog;
 import com.hilo.listeners.OnOperItemClickL;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 
 import java.util.ArrayList;
 
@@ -172,7 +172,7 @@ public class NormalListDialog extends BaseDialog {
     public void setUiBeforShow() {
         /** title */
         float radius = dp2px(cornerRadius_DP);
-        tv_title.setBackgroundDrawable(Utils.cornerDrawable(titleBgColor, new float[]{radius, radius, radius,
+        tv_title.setBackgroundDrawable(UIUtils.cornerDrawable(titleBgColor, new float[]{radius, radius, radius,
                 radius, 0, 0, 0, 0}));
         tv_title.setText(title);
         tv_title.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleTextSize_SP);
@@ -184,10 +184,10 @@ public class NormalListDialog extends BaseDialog {
         lv.setDividerHeight(dp2px(dividerHeight_DP));
 
         if (isTitleShow) {
-            lv.setBackgroundDrawable(Utils.cornerDrawable(lvBgColor, new float[]{0, 0, 0, 0, radius, radius, radius,
+            lv.setBackgroundDrawable(UIUtils.cornerDrawable(lvBgColor, new float[]{0, 0, 0, 0, radius, radius, radius,
                     radius}));
         } else {
-            lv.setBackgroundDrawable(Utils.cornerDrawable(lvBgColor, radius));
+            lv.setBackgroundDrawable(UIUtils.cornerDrawable(lvBgColor, radius));
         }
 
         if (adapter == null) {
@@ -407,10 +407,10 @@ public class NormalListDialog extends BaseDialog {
             ll_item.addView(tv_item);
             float radius = dp2px(cornerRadius_DP);
             if (isTitleShow) {
-                ll_item.setBackgroundDrawable((Utils.listItemSelector(radius, Color.TRANSPARENT, itemPressColor,
+                ll_item.setBackgroundDrawable((UIUtils.listItemSelector(radius, Color.TRANSPARENT, itemPressColor,
                         position == contents.size() - 1)));
             } else {
-                ll_item.setBackgroundDrawable(Utils.listItemSelector(radius, Color.TRANSPARENT, itemPressColor,
+                ll_item.setBackgroundDrawable(UIUtils.listItemSelector(radius, Color.TRANSPARENT, itemPressColor,
                         contents.size(), position));
             }
 

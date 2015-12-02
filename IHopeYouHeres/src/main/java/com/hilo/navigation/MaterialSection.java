@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.hilo.R;
 import com.hilo.listeners.MaterialSectionListener;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 
 /**
  * Navigation Drawer section with Material Design style
@@ -224,7 +224,7 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
     public MaterialSection useRealColor() {
         realColor = true;
         if(icon != null) {
-            Utils.setAlpha(icon, 1f);
+            UIUtils.setAlpha(icon, 1f);
         }
 
         return this;
@@ -289,7 +289,7 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
 
             if(icon != null && !realColor) {
                 icon.setColorFilter(sectionColor);
-                Utils.setAlpha(icon, 1f);
+                UIUtils.setAlpha(icon, 1f);
             }
         }
     }
@@ -308,7 +308,7 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
 
             if (icon != null && !realColor) {
                 icon.setColorFilter(iconColor);
-                Utils.setAlpha(icon, 0.54f);
+                UIUtils.setAlpha(icon, 0.54f);
             }
         }
     }
@@ -461,7 +461,7 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
 
             if (icon != null && !realColor) {
                 icon.setColorFilter(sectionColor);
-                Utils.setAlpha(icon, 1f);
+                UIUtils.setAlpha(icon, 1f);
             }
         }
 

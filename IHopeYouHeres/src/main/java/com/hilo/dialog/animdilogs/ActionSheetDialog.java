@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.hilo.dialog.animdilogs.base.BottomBaseDialog;
 import com.hilo.listeners.OnOperItemClickL;
-import com.hilo.util.Utils;
+import com.hilo.util.UIUtils;
 
 import java.util.ArrayList;
 
@@ -202,7 +202,7 @@ public class ActionSheetDialog extends BottomBaseDialog {
         /** title */
         float radius = dp2px(cornerRadius_DP);
         tv_title.setHeight(dp2px(titleHeight));
-        tv_title.setBackgroundDrawable(Utils.cornerDrawable(titleBgColor, new float[]{radius, radius, radius,
+        tv_title.setBackgroundDrawable(UIUtils.cornerDrawable(titleBgColor, new float[]{radius, radius, radius,
                 radius, 0, 0, 0, 0}));
         tv_title.setText(title);
         tv_title.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleTextSize_SP);
@@ -219,7 +219,7 @@ public class ActionSheetDialog extends BottomBaseDialog {
         tv_cancel.setText("取消");
         tv_cancel.setTextSize(TypedValue.COMPLEX_UNIT_SP, itemTextSize_SP);
         tv_cancel.setTextColor(itemTextColor);
-        tv_cancel.setBackgroundDrawable(Utils.listItemSelector(radius, lvBgColor, itemPressColor, 1, 0));
+        tv_cancel.setBackgroundDrawable(UIUtils.listItemSelector(radius, lvBgColor, itemPressColor, 1, 0));
 
         tv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,10 +233,10 @@ public class ActionSheetDialog extends BottomBaseDialog {
         lv.setDividerHeight(dp2px(dividerHeight_DP));
 
         if (isTitleShow) {
-            lv.setBackgroundDrawable(Utils.cornerDrawable(lvBgColor, new float[]{0, 0, 0, 0, radius, radius, radius,
+            lv.setBackgroundDrawable(UIUtils.cornerDrawable(lvBgColor, new float[]{0, 0, 0, 0, radius, radius, radius,
                     radius}));
         } else {
-            lv.setBackgroundDrawable(Utils.cornerDrawable(lvBgColor, radius));
+            lv.setBackgroundDrawable(UIUtils.cornerDrawable(lvBgColor, radius));
         }
 
         if (adapter == null) {
@@ -460,10 +460,10 @@ public class ActionSheetDialog extends BottomBaseDialog {
             ll_item.addView(tv_item);
             float radius = dp2px(cornerRadius_DP);
             if (isTitleShow) {
-                ll_item.setBackgroundDrawable((Utils.listItemSelector(radius, Color.TRANSPARENT, itemPressColor,
+                ll_item.setBackgroundDrawable((UIUtils.listItemSelector(radius, Color.TRANSPARENT, itemPressColor,
                         position == contents.size() - 1)));
             } else {
-                ll_item.setBackgroundDrawable(Utils.listItemSelector(radius, Color.TRANSPARENT, itemPressColor,
+                ll_item.setBackgroundDrawable(UIUtils.listItemSelector(radius, Color.TRANSPARENT, itemPressColor,
                         contents.size(), position));
             }
 

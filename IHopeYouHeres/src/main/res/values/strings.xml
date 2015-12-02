@@ -2,6 +2,16 @@
     <string name="app_name">IHopeYouHere</string>
     <string name="action_settings">Settings</string>
 
+    <string name="neterr_timeout">联网超时</string>
+    <string name="neterr_nullpt">服务器无数据返回</string>
+    <string name="neterr_refused">服务器拒绝请求</string>
+    <string name="neterr_response">服务器应答错误</string>
+    <string name="neterr_errorcode">网络异常,错误码:</string>
+    <string name="netrr_connected_error">网络连接失败</string>
+    <string name="netrr_connected_not_found">404</string>
+    <string name="neterr_error">网络异常</string>
+    <string name="neterr_parse">数据解析错误</string>
+
     <!-- Dialogs -->
     <string name="agree">Agree</string>
     <string name="disagree">Disagree</string>

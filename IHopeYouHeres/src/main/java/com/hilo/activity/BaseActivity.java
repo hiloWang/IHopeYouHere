@@ -1,39 +1,44 @@
 package com.hilo.activity;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
-import com.hilo.R;
-import com.hilo.animotions.BaseAnimatorSet;
 import com.hilo.animotions.BounceEnter.BounceTopEnter;
 import com.hilo.animotions.SlideExit.SlideBottomExit;
-import com.hilo.dialog.DialogManager;
 import com.hilo.dialog.animdilogs.NormalDialog;
-import com.hilo.fragment.FragmentButton;
-import com.hilo.fragment.Section1Fragment;
-import com.hilo.fragment.Section2Fragment;
-import com.hilo.listeners.MaterialSectionListener;
 import com.hilo.listeners.OnBtnClickL;
-import com.hilo.navigation.MaterialAccount;
-import com.hilo.navigation.MaterialNavigationDrawer;
-import com.hilo.navigation.MaterialSection;
-import com.hilo.views.widgets.MultiSwipeRefreshLayout;
+import com.hilo.receiver.ExceptionLoingOutReceiver;
+import com.hilo.util.LogUtils;
+import com.hilo.util.Utils;
+
+import java.util.LinkedList;
 
 /**
  * Created by hilo on 15/11/27.
- * <p>
+ * <p/>
  * Drscription:
  */
-public class BaseActivity extends MaterialNavigationDrawer {
+public class BaseActivity extends AppCompatActivity {
+
+    public static LinkedList<Activity> mActivityArray = new LinkedList<>();
+    protected ExceptionLoingOutReceiver receiver;
+    protected Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+        mContext = this;
+        receiver = new ExceptionLoingOutReceiver();
+        IntentFilter intentFilter = new IntentFilter(
+                "android.exception.ExceptionLoingOutReceiver");
+        registerReceiver(receiver, intentFilter);
+        mActivityArray.add(this);
     }
 
     @Override
@@ -43,51 +48,11 @@ public class BaseActivity extends MaterialNavigationDrawer {
 
 
     @Override
-    public void init(Bundle savedInstanceState) {
-        // add accounts
-        MaterialAccount account = new MaterialAccount(this.getResources(), "hilo", "253123123@qq.com", R.drawable.ic_launcher, R.drawable.navdrawer1);
-        this.addAccount(account);
-
-        MaterialAccount account2 = new MaterialAccount(this.getResources(), "Example", "example@example.com", R.drawable.ic_launcher, R.drawable.navdrawer2);
-        this.addAccount(account2);
-
-//        MaterialAccount account3 = new MaterialAccount(this.getResources(),"Example","example@example.com",R.drawable.ic_launcher,R.drawable.navdrawer3);
-//        this.addAccount(account3);
-
-        // add account sections
-        this.addAccountSection(newSection("Account settings", R.drawable.ic_settings, new MaterialSectionListener() {
-            @Override
-            public void onClick(MaterialSection section) {
-                Toast.makeText(BaseActivity.this, "Account settings clicked", Toast.LENGTH_SHORT).show();
-
-                // for default section is selected when you click on it
-                section.unSelect(); // so deselect the section if you want
-            }
-        }));
-
-
-        // set header data
-//        setDrawerHeaderImage(R.drawable.navdrawer1);
-//        setUsername("hilo");
-//        setUserEmail("253123123@qq.com");
-//        setFirstAccountPhoto(getResources().getDrawable(R.drawable.ic_launcher));
-
-        // create sections
-        this.addSection(newSection("Section 1", new Section1Fragment()));
-        this.addSection(newSection("Section 2", new Section2Fragment()));
-        this.addSection(newSection("Section 3", R.drawable.ic_mic_white_24dp, new FragmentButton()).setSectionColor(Color.parseColor("#10B8F6")));
-        this.addSection(newSection("Section", R.drawable.ic_hotel_grey600_24dp, new FragmentButton()).setSectionColor(Color.parseColor("#10B8F6")));
-
-        // create bottom section
-        this.addBottomSection(newSection("Bottom Section", R.drawable.ic_settings, new Intent(this, Settings.class)));
-
-//        enableToolbarElevation();
-    }
-
-    // true：disable swipeRefreshLayout scroll up false:otherwise
-    @Override
-    public boolean canSwipeRefreshChildScrollUp() {
-        return false;
+    protected void onDestroy() {
+        mActivityArray.remove(this);
+        LogUtils.I("mlog", "BaseActivity onDestroy:" + mActivityArray.size());
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 
     @Override
@@ -120,5 +85,34 @@ public class BaseActivity extends MaterialNavigationDrawer {
                     });
         }
         return false;
+    }
+
+
+    public static void exitAllActivity() {
+        for (Activity act : mActivityArray) {
+            act.finish();
+        }
+        mActivityArray.clear();
+    }
+
+    public static void exitApp() {
+        Utils.setAllStaticVarsNull();
+        exitAllActivity();
+//        DbfEngine.close();
+        System.gc();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!Utils.isAppOnForeground(mContext)) {
+
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }
