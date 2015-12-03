@@ -82,13 +82,13 @@ public class Company implements Serializable{
 //			os = new ObjectInputStream(fs);
 //			obj = (Company) os.readObject();
 //		} catch (Exception e) {
-//			Log.i("klog", e.toString());
+//			Log.i("mlog", e.toString());
 //		}finally{
 //			try {
 //				if(os != null)os.close();
 //				if(fs != null)fs.close();
 //			} catch (Exception e) {
-//				Log.i("klog", e.toString());
+//				Log.i("mlog", e.toString());
 //			}
 //		}
 		SharedPreferences pref = MyApplication.mContext.getSharedPreferences(getFileName(), 0);
@@ -151,13 +151,13 @@ public class Company implements Serializable{
 //			os = new ObjectOutputStream(fs);
 //			os.writeObject(obj);
 //		} catch (Exception e) {
-//			Log.i("klog", e.toString());
+//			Log.i("mlog", e.toString());
 //		}finally{
 //			try {
 //				if(os != null)os.close();
 //				if(fs != null)fs.close();
 //			} catch (Exception e) {
-//				Log.i("klog", e.toString());
+//				Log.i("mlog", e.toString());
 //			}
 //		}
 		SharedPreferences pref = MyApplication.mContext.getSharedPreferences(getFileName(), 0);

@@ -14,9 +14,9 @@ import com.hilo.R;
 import com.hilo.activity.BaseActivity;
 import com.hilo.activity.LoginActivity;
 import com.hilo.bean.PacketBase;
-import com.hilo.data.Fields;
 import com.hilo.others.Company;
 import com.hilo.others.Configuration;
+import com.hilo.others.Fields;
 import com.hilo.others.MyApplication;
 import com.hilo.util.AESUtils;
 import com.hilo.util.LogUtils;
@@ -59,7 +59,7 @@ public class HttpClient {
      * @return PacketBase对象： int ErrorCode; String ErrorMessage;
      */
     public static Object httpGet(final String url, final Class<?> classt, boolean isDecrypt) {
-        LogUtils.I("klog", url);
+        LogUtils.I("mlog", url);
 
         final MyCountDownLatch latch = new MyCountDownLatch(1); // 同步辅助类,
         // count：一个工人工作
@@ -68,7 +68,7 @@ public class HttpClient {
 
             public void run() {
                 httpResult = HttpControl.httpGet(url);
-                LogUtils.I("klog", "" + httpResult.result);
+                LogUtils.I("mlog", "" + httpResult.result);
                 latch.httpResult = httpResult;
                 latch.countDown(); // 当前线程调用此方法，则计数减一
             }
@@ -108,8 +108,8 @@ public class HttpClient {
             public void run() {
                 HttpControl.SapHttpResult httpResult = null;
                 httpResult = HttpControl.httpGet(sb.toString());
-                LogUtils.I("klog", "url" + sb.toString());
-                LogUtils.I("klog", "httpResult" + httpResult.result);
+                LogUtils.I("mlog", "url" + sb.toString());
+                LogUtils.I("mlog", "httpResult" + httpResult.result);
                 dataProc(httpResult, handler, what, classt, isDecrypt);
             }
 
@@ -129,7 +129,7 @@ public class HttpClient {
      * @param isDecrypt 返回数据是否要解密
      */
     public static void httpPost(final Handler handler, final int what, final String url, final String content, final Class<?> classt, final boolean isEncrypt, final boolean isDecrypt) {
-        LogUtils.I("klog", url + "\n" + content);
+        LogUtils.I("mlog", url + "\n" + content);
 
         new Thread() {
             HttpControl.SapHttpResult httpResult = null;
@@ -159,7 +159,7 @@ public class HttpClient {
      * @return PacketBase对象： int ErrorCode; String ErrorMessage;
      */
     public static Object httpPost(final String url, final String content, final Class<?> classt, final boolean isEncrypt) {
-        LogUtils.I("klog", url + "\n" + content);
+        LogUtils.I("mlog", url + "\n" + content);
 
         final MyCountDownLatch latch = new MyCountDownLatch(1);
         new Thread() {
@@ -170,12 +170,12 @@ public class HttpClient {
                 if (isEncrypt) try {
                     String aesString = AESUtils.encode(content, AESUtils.Key, AESUtils.IV);
                     aescontent = Utils.getGsonInstance().toJson(aesString);
-                    LogUtils.I("klog", "aescontent-----" + aescontent);
+                    LogUtils.I("mlog", "aescontent-----" + aescontent);
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
                 httpResult = HttpControl.httpPost(url, aescontent);
-                LogUtils.I("klog", "" + httpResult.result);
+                LogUtils.I("mlog", "" + httpResult.result);
                 latch.httpResult = httpResult;
                 latch.countDown();
             }
@@ -244,7 +244,7 @@ public class HttpClient {
         url = sb.toString(); // http://cloud.sap360.com.cn:51001/mail/read/20d30dd0-441e-4961-a60f-12fbf343ec69
         new HttpClient().new MyThread(url, content) {
             public void run() {
-                HttpControl.SapHttpResult httpResult = null;
+                HttpControl.SapHttpResult httpResult;
                 if (cfg.invokeMethod == ReqParam.GET) {
                     httpResult = HttpControl.httpGet(mUrl);
                 } else if (cfg.invokeMethod == ReqParam.POST) {
@@ -283,7 +283,7 @@ public class HttpClient {
         // 前后拼接安全码
         tokenSb.append(Company.getInstance().SecretCode);
 
-        String[] upParameterNams = null;
+        String[] upParameterNams;
         HashMap<String, String> parameAndValue = new HashMap<>();
         if (cfg.hasSessionKey) {// 把SessionKey参数也添加进去
             if (oldParamsNames == null) oldParamsNames = new String[0];
@@ -370,9 +370,9 @@ public class HttpClient {
             if (!TextUtils.isEmpty(token)) sb.append("/").append(token);
         }
         url = sb.toString();
-        LogUtils.I("klog", url);
+        LogUtils.I("mlog", url);
         if (content != null) {
-            LogUtils.I("klog", content);
+            LogUtils.I("mlog", content);
         }
 
         final MyCountDownLatch latch = new MyCountDownLatch(1);
@@ -387,7 +387,7 @@ public class HttpClient {
                 } else {
                     httpResult = HttpControl.httpDelete(mUrl);
                 }
-                LogUtils.I("klog", "" + httpResult.result + "  statusCode::" + httpResult.statusCode);
+                LogUtils.I("mlog", "" + httpResult.result + "  statusCode::" + httpResult.statusCode);
                 latch.httpResult = httpResult;
                 latch.countDown();
             }
@@ -411,7 +411,7 @@ public class HttpClient {
      * @return PacketBase对象
      */
     private static Object dataProc(HttpControl.SapHttpResult httpResult, Class<?> classt, boolean isDecrypt) {
-        LogUtils.I("klog", httpResult.statusCode + "");
+        LogUtils.I("mlog", httpResult.statusCode + "");
         // 如果是加密并且返回状态码为200，则进行解密，否则不处理
         if (isDecrypt && httpResult.statusCode == STAUS_OK) try {
             httpResult.result = AESUtils.Decrypt(httpResult.result, AESUtils.Key, AESUtils.IV);
@@ -433,7 +433,7 @@ public class HttpClient {
                 // v = (PacketBase) gson.fromJson(httpResult.result, classt); // 串转对象，str：服务器返回的串。
                 v = transResult(httpResult, classt, null);
             } catch (Exception e) {
-                LogUtils.I("klog", e.toString());
+                LogUtils.I("mlog", e.toString());
             }
 
             if (v != null) {
@@ -467,7 +467,7 @@ public class HttpClient {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        LogUtils.I("klog", httpResult.statusCode + "\n" + httpResult.result); // 服务端返回的串数据
+        LogUtils.I("mlog", httpResult.statusCode + "\n" + httpResult.result); // 服务端返回的串数据
         Message msg = new Message();
         msg.what = what;
         // 返回状态码
@@ -664,7 +664,7 @@ public class HttpClient {
                         if (handler != null) handler.sendMessage(msg);
                     }
                 } catch (Exception e) {
-                    LogUtils.I("klog", e.toString());
+                    LogUtils.I("mlog", e.toString());
                 }
                 if (back != null) {
                     latch.str = back.FileName;
@@ -763,7 +763,7 @@ public class HttpClient {
             showErrMsg(httpResult.result);
         } else {
             res_id = R.string.neterr_error;
-            LogUtils.I("klog", httpResult.result);
+            LogUtils.I("mlog", httpResult.result);
         }
         if (res_id != 0) showErrMsg(res_id);
     }

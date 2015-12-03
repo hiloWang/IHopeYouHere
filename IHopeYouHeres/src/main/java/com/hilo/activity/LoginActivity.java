@@ -8,7 +8,6 @@ import android.view.View.OnLayoutChangeListener;
 import android.widget.Toast;
 
 import com.hilo.R;
-import com.hilo.data.Fields;
 import com.hilo.fragment.FragmentButton;
 import com.hilo.fragment.Section1Fragment;
 import com.hilo.fragment.Section2Fragment;
@@ -16,9 +15,17 @@ import com.hilo.listeners.MaterialSectionListener;
 import com.hilo.navigation.MaterialAccount;
 import com.hilo.navigation.MaterialNavigationDrawer;
 import com.hilo.navigation.MaterialSection;
+import com.hilo.others.Fields;
 import com.hilo.util.ImageUtils;
 
+import org.xutils.DbManager;
 
+/**
+ * 1. BaseActivity 为 Activity 栈管理类, 其实这样管理并不是理想的, 容易引起内存泄露.
+ * 2. HttpClient.XX; // 请求网络方式
+ * 3. new ImageUtils(imageView, url); // iamgeLoader 加载网络图片方式
+ * 4. DialogManager.getInstance().XX // dialog 动画调用方式
+ */
 public class LoginActivity extends MaterialNavigationDrawer implements OnLayoutChangeListener {
 
     private boolean mLogout;
@@ -26,6 +33,7 @@ public class LoginActivity extends MaterialNavigationDrawer implements OnLayoutC
     private int screenHeight = 0;
     // 软件盘弹起后所占高度阀值
     private int keyHeight = 0;
+    private static DbManager.DaoConfig daoConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,8 @@ public class LoginActivity extends MaterialNavigationDrawer implements OnLayoutC
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
         // 阀值设置为屏幕高度的1/4
         keyHeight = screenHeight / 4;
+
+
     }
 
     @Override
@@ -80,6 +90,8 @@ public class LoginActivity extends MaterialNavigationDrawer implements OnLayoutC
         this.addBottomSection(newSection("Bottom Section", R.drawable.ic_settings, new Intent(this, Settings.class)));
 
 //        enableToolbarElevation();
+
+
     }
 
     // true：disable swipeRefreshLayout scroll up false:otherwise
@@ -116,5 +128,4 @@ public class LoginActivity extends MaterialNavigationDrawer implements OnLayoutC
             Configuration.saveConfig();
         }
     };*/
-
 }

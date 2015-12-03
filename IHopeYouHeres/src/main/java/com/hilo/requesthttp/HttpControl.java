@@ -1,8 +1,8 @@
 package com.hilo.requesthttp;
 
-import com.hilo.data.Fields;
 import com.hilo.others.Company;
 import com.hilo.others.Configuration;
+import com.hilo.others.Fields;
 import com.hilo.util.LogUtils;
 import com.hilo.util.Utils;
 
@@ -43,7 +43,7 @@ public class HttpControl {
         SapHttpResult httpResult = new SapHttpResult();
         HttpClient httpclient = getHttpClient();
         HttpGet httpget = new HttpGet(urlStr);
-        LogUtils.I("klog", urlStr + "");
+        LogUtils.I("mlog", urlStr + "");
         try {
             HttpResponse response = httpclient.execute(httpget);
             httpResult.statusCode = response.getStatusLine().getStatusCode();
@@ -68,11 +68,11 @@ public class HttpControl {
                 baf.append(byteBuf, 0, l);
             }
             httpResult.result = new String(baf.toByteArray());
-            //LogUtils.I("klog", httpResult.result + "");
+            //LogUtils.I("mlog", httpResult.result + "");
             return httpResult;
         } catch (Exception e) {
             mException = e.toString();
-            LogUtils.I("klog", mException + "");
+            LogUtils.I("mlog", mException + "");
         } finally {
             httpclient.getConnectionManager().shutdown();
         }
@@ -133,7 +133,7 @@ public class HttpControl {
     // httpclient.getConnectionManager().shutdown();
     // return baf.toByteArray();
     // }catch(Exception e){
-    // Log.i("klog", e.toString());
+    // Log.i("mlog", e.toString());
     // }
     // return null;
     // }
@@ -146,7 +146,7 @@ public class HttpControl {
      * @return true 写入成功 false 写入失败
      */
     public static boolean httpDown(String pathfile, String urlStr) {
-        LogUtils.I("klog", urlStr + "");
+        LogUtils.I("mlog", urlStr + "");
         HttpClient httpclient = getHttpClient();
         HttpGet httpget = null;
         try {
@@ -178,7 +178,7 @@ public class HttpControl {
             return true;
         } catch (Exception e) {
             mException = e.toString();
-            LogUtils.I("klog", mException + "");
+            LogUtils.I("mlog", mException + "");
             if (file != null) {
                 file.delete();
             }
@@ -198,7 +198,7 @@ public class HttpControl {
             return entity;
         } catch (Exception e) {
             mException = e.toString();
-            LogUtils.I("klog", mException + "");
+            LogUtils.I("mlog", mException + "");
         }
         // finally{
         // httpclient.getConnectionManager().shutdown();
@@ -235,7 +235,7 @@ public class HttpControl {
             // return new String(buf);
         } catch (Exception e) {
             mException = e.toString();
-            LogUtils.I("klog", mException + "");
+            LogUtils.I("mlog", mException + "");
         } finally {
             httpclient.getConnectionManager().shutdown();
         }
@@ -284,7 +284,7 @@ public class HttpControl {
             return httpResult;
         } catch (Exception e) {
             mException = e.toString();
-            LogUtils.I("klog", mException + "");
+            LogUtils.I("mlog", mException + "");
         } finally {
             httpclient.getConnectionManager().shutdown();
         }
@@ -302,9 +302,9 @@ public class HttpControl {
         SapHttpResult httpResult = new SapHttpResult();
         HttpClient httpclient = getHttpClient();
         HttpPost httppost = new HttpPost(urlStr);
-        LogUtils.I("klog", urlStr + "");
+        LogUtils.I("mlog", urlStr + "");
         if (content != null) {
-            LogUtils.I("klog", content);
+            LogUtils.I("mlog", content);
         }
         try {
             StringEntity sn = new StringEntity(content, "UTF-8");// 将参数转utf-8.
@@ -337,12 +337,12 @@ public class HttpControl {
             }
             httpResult.result = new String(baf.toByteArray());
 
-            //LogUtils.I("klog", httpResult.result + "");
+            //LogUtils.I("mlog", httpResult.result + "");
             //UtilTool.writeFileToSDOfTxt(httpResult.result + "", "sinya_cache");
             return httpResult;
         } catch (Exception e) {
             mException = e.toString();
-            LogUtils.I("klog", mException + "");
+            LogUtils.I("mlog", mException + "");
         } finally {
             httpclient.getConnectionManager().shutdown();
         }
@@ -375,7 +375,7 @@ public class HttpControl {
             return httpResult;
         } catch (Exception e) {
             mException = e.toString();
-            LogUtils.I("klog", mException + "");
+            LogUtils.I("mlog", mException + "");
         } finally {
             httpclient.getConnectionManager().shutdown();
         }
@@ -415,7 +415,7 @@ public class HttpControl {
             return httpResult;
         } catch (Exception e) {
             mException = e.toString();
-            LogUtils.I("klog", mException + "");
+            LogUtils.I("mlog", mException + "");
         } finally {
             httpclient.getConnectionManager().shutdown();
         }
@@ -460,7 +460,7 @@ public class HttpControl {
             return new String(baf.toByteArray());
         } catch (Exception e) {
             mException = e.toString();
-            LogUtils.I("klog", mException + "");
+            LogUtils.I("mlog", mException + "");
         } finally {
             httpclient.getConnectionManager().shutdown();
         }
@@ -472,7 +472,7 @@ public class HttpControl {
         HttpClient httpclient = getHttpClient();
         HttpDelete httpdelete = new HttpDelete(urlStr);
         httpdelete.addHeader("ContentType", "text/plain");
-        LogUtils.I("klog", urlStr + "");
+        LogUtils.I("mlog", urlStr + "");
         try {
             HttpResponse response = httpclient.execute(httpdelete);
             httpResult.statusCode = response.getStatusLine().getStatusCode();
@@ -489,11 +489,11 @@ public class HttpControl {
                 baf.append(byteBuf, 0, l);
             }
             httpResult.result = new String(baf.toByteArray());
-            LogUtils.I("klog", httpResult.result + "");
+            LogUtils.I("mlog", httpResult.result + "");
             return httpResult;
         } catch (Exception e) {
             mException = e.toString();
-            LogUtils.I("klog", mException + "");
+            LogUtils.I("mlog", mException + "");
         } finally {
             httpclient.getConnectionManager().shutdown();
         }

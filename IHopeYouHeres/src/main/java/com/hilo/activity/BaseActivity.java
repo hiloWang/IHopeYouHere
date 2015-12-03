@@ -18,6 +18,8 @@ import com.hilo.receiver.ExceptionLoingOutReceiver;
 import com.hilo.util.LogUtils;
 import com.hilo.util.Utils;
 
+import org.xutils.x;
+
 import java.util.LinkedList;
 
 /**
@@ -34,7 +36,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-        mContext = this;
+        x.view().inject(this);
         receiver = new ExceptionLoingOutReceiver();
         IntentFilter intentFilter = new IntentFilter(
                 "android.exception.ExceptionLoingOutReceiver");

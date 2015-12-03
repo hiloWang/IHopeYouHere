@@ -339,7 +339,7 @@ public class ReqParam {
      * http://localhost:9998/API/Remind/V1/Create/{sessionKey}/{dataType:int}/{token}
      * Sinya - 已测试
      *//*
-    public static ReqParam newBacklog = new ReqParam("API/Remind/V1/Create", POST,
+    public static ReqParam newBacmlog = new ReqParam("API/Remind/V1/Create", POST,
             null, new String[]{"dataType"});
 
     *//**
@@ -348,8 +348,8 @@ public class ReqParam {
      * http://localhost:9998/API/Remind/V1/Read/{sessionKey}/{dataType:int}/{status:int}/{important:int}/{sliderDown:int}/{refDate:datetime}/{token}
      * Sinya - 已测试
      *//*
-    public static ReqParam readBacklog = new ReqParam("API/Remind/V1/Read",
-            GET, NewBacklogOrRemindResult.class, new String[]{"dataType", "status", "important", "sliderDown", "refDate"});
+    public static ReqParam readBacmlog = new ReqParam("API/Remind/V1/Read",
+            GET, NewBacmlogOrRemindResult.class, new String[]{"dataType", "status", "important", "sliderDown", "refDate"});
 
     *//**
      * 获取当前用户所有能用的工作台
@@ -587,7 +587,7 @@ public class ReqParam {
      * Sinya - 已测试
      *//*
     public static ReqParam remindGetByKey = new ReqParam("API/Remind/V1/GetByKey",
-            GET, NewBacklogOrRemind.class, new String[]{"docEntry"});
+            GET, NewBacmlogOrRemind.class, new String[]{"docEntry"});
 
     *//**
      * 3.16.28 读取OA单据相关的互动待办
@@ -596,7 +596,7 @@ public class ReqParam {
      *//*
     public static ReqParam remindReadByOrder = new ReqParam(
             "API/Remind/V1/ReadByOrder", GET,
-            NewBacklogOrRemindResult.class, new String[]{"oaOrderType", "oaDocEntry"});
+            NewBacmlogOrRemindResult.class, new String[]{"oaOrderType", "oaDocEntry"});
 
     *//**
      * 3.16.4	赞

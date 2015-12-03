@@ -4,12 +4,6 @@ import android.util.Log;
 
 import com.hilo.others.MyApplication;
 
-/**
- * @Author: Sinya
- * @Editor：
- * @Date: 2015年5月20日 下午11:24:31
- * @Description: Log工具类
- */
 public class LogUtils {
 
     /* DEBUG为true，则使用LogUtils的日志打印有效
@@ -18,7 +12,7 @@ public class LogUtils {
     private static boolean DEBUG = Utils.isApkDebugable(MyApplication.mContext);
 
     //false 表示取消打印Sinya 的测试log日志
-    private static String AUTHOR_SINYA = "Sinya";
+    private static String AUTHOR_SINYA = "mlog";
     private static boolean SINYA_DEBUG = false;
 
     /**
