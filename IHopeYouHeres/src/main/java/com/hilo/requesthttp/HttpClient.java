@@ -260,17 +260,17 @@ public class HttpClient {
     }
 
     /**
-     * 把api的参数名（转换成大写）+参数值按参数名排序生成一个字符串,<br>
-     * 再加上Post的字符串 (如果post流数据(比如图片,文件)，则不用处理)<br>
-     * 然后再在字符串的前面和后面添加公司的安全码(SecretCode) <br>
+     * 把api的参数名（转换成大写）+ 参数值按参数名排序生成一个字符串,
+     * 再加上Post的字符串 (如果post流数据(比如图片,文件)，则不用处理)
+     * 然后再在字符串的前面和后面添加公司的安全码(SecretCode)
      * 将以上字符串生成Md5码(全部转成大写)
      *
      * @param param 所有的参数值
-     * @param cfg
-     * @return
+     * @param cfg ReqParam
+     * @return MD5加密的token值
      */
     public static String createToken(ReqParam cfg, String... param) {
-        String token = "";
+        String token;
         String postParam = null;
         if (cfg.invokeMethod == ReqParam.POST) {
             postParam = param[param.length - 1];
@@ -278,8 +278,7 @@ public class HttpClient {
         }
         StringBuffer tokenSb = new StringBuffer();
         String[] oldParamsNames = null;
-        if (cfg.parameterNames != null)
-            oldParamsNames = Arrays.copyOf(cfg.parameterNames, cfg.parameterNames.length);
+        if (cfg.parameterNames != null) oldParamsNames = Arrays.copyOf(cfg.parameterNames, cfg.parameterNames.length);
         // 前后拼接安全码
         tokenSb.append(Company.getInstance().SecretCode);
 
@@ -312,10 +311,10 @@ public class HttpClient {
             // 把Post数据拼接起来
             if (postParam != null) tokenSb.append(postParam);
         }
-
         // 前后拼接安全码
         tokenSb.append(Company.getInstance().SecretCode);
-        token = AESUtils.MD5Encode(tokenSb.toString(), "utf-8").toLowerCase();
+        token = Utils.MD5Encode(tokenSb.toString(), "utf-8").toLowerCase();
+        // cfg.parameterNames = oldParamsNames;
         return token;
     }
 
@@ -366,7 +365,7 @@ public class HttpClient {
         }
         if (cfg.hasToken) {
             // 生成Token值并拼接到Url后面
-            String token = createToken(cfg, param);
+            String token = HttpClient.createToken(cfg, param);
             if (!TextUtils.isEmpty(token)) sb.append("/").append(token);
         }
         url = sb.toString();

@@ -11,9 +11,9 @@ public class LogUtils {
      */
     private static boolean DEBUG = Utils.isApkDebugable(MyApplication.mContext);
 
-    //false 表示取消打印Sinya 的测试log日志
+    //false 的表示取消打印mlog 测试log日志
     private static String AUTHOR_SINYA = "mlog";
-    private static boolean SINYA_DEBUG = false;
+    private static boolean LOG_DEBUG = true;
 
     /**
      * @param tag 标签
@@ -29,7 +29,7 @@ public class LogUtils {
 
             if (tag == null || "".equals(tag.trim())) {
                 tag = className;
-            } else if (tag.equals(AUTHOR_SINYA) && !SINYA_DEBUG) {
+            } else if (tag.equals(AUTHOR_SINYA) && !LOG_DEBUG) {
                 return;
             }
 

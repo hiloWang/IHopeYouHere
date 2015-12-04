@@ -1,9 +1,9 @@
 package com.hilo.others;
 
-import java.io.Serializable;
-
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import java.io.Serializable;
 /**
  * 用户登录
  * @author hilo
@@ -13,7 +13,6 @@ public class Company implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	public String companyName;
-//	public String sessionKey;
 	public int userSign;
 	public String userCode;
 	public String userName;
@@ -32,8 +31,6 @@ public class Company implements Serializable{
 	public String GpsTrackEndTime;
 	public String GpsTrackStartTime;
 	public int Interval;
-//	public String companyCode;
-//	public String serverAddress;
 	public String userImagePath;
 	public String userFilePath;
 	public String appPath;
@@ -55,7 +52,6 @@ public class Company implements Serializable{
 	static private Company obj;
 	public String SecretCode;//安全码   用于计算tonken值
 	public int PrivateCloud;//是否是私有云服务  1:是  0:否
-//	public static boolean isCurrentQuit;
 	public String DownLoadUrl;   //文档下载url
 	public String UploadUrl;  //文档上传url
 	public String LogHint1;//工作总结",

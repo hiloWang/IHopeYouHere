@@ -28,7 +28,7 @@ public class ReqParam {
      */
     public Class<?> praseClass;
     /**
-     * 提交的数据是否要加密
+     * POST提交的数据是否要加密
      */
     public boolean isEncrypt;
     /**
@@ -102,11 +102,11 @@ public class ReqParam {
         super();
         this.cmd = cmd;
         this.invokeMethod = invokeMethod;
-        this.hasSessionKey = true;
+        this.hasSessionKey = false;
         this.praseClass = praseClass;
         this.isEncrypt = false;
         this.parameterNames = parameterNames;
-        this.hasToken = true;
+        this.hasToken = false;
         this.isDecrypt = false;
     }
 
@@ -117,6 +117,7 @@ public class ReqParam {
      */
     public static ReqParam user_image_cfg = new ReqParam("/api/User/V1/UserImage/", GET, null, new String[]{"userSign"});
 
+    public static ReqParam test = new ReqParam("api/SysMsg/V1/GetViewMessage", GET, HttpParse.NotifyGroup.class, new String[]{"companyCode"});
 
 /*
     *//**

@@ -1,6 +1,7 @@
 package com.hilo.others;
 
 import org.xutils.DbManager;
+import org.xutils.x;
 
 import java.io.File;
 
@@ -11,13 +12,25 @@ import java.io.File;
  */
 public class DataBaseFactory {
 
-    public static DbManager.DaoConfig daoConfig;
+    private static DbManager dbManager;
+    private static DbManager.DaoConfig daoConfig;
 
     public DataBaseFactory() {
 
     }
 
-    public static DbManager.DaoConfig getDaoConfig() {
+    public static final DbManager getInstance() {
+        if(dbManager == null) {
+            synchronized (DataBaseFactory.class) {
+                if(dbManager == null) {
+                    dbManager = x.getDb(getDaoConfig());
+                }
+            }
+        }
+        return dbManager;
+    }
+
+    private static DbManager.DaoConfig getDaoConfig() {
         if(daoConfig == null) {
             synchronized (DataBaseFactory.class) {
                 if(daoConfig == null) {
@@ -38,6 +51,13 @@ public class DataBaseFactory {
             }
         }
         return daoConfig;
+    }
+
+    public static final void setDbManagerNull() {
+        if(dbManager != null)
+            dbManager = null;
+        if(daoConfig != null)
+            daoConfig = null;
     }
 
 }

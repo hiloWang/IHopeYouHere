@@ -25,6 +25,7 @@ import org.xutils.DbManager;
  * 2. HttpClient.XX; // 请求网络方式
  * 3. new ImageUtils(imageView, url); // iamgeLoader 加载网络图片方式
  * 4. DialogManager.getInstance().XX // dialog 动画调用方式
+ * 5. DbManager db = DataBaseFactory.getInstance; // 数据库管理类
  */
 public class LoginActivity extends MaterialNavigationDrawer implements OnLayoutChangeListener {
 

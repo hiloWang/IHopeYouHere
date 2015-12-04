@@ -2,6 +2,8 @@ package com.hilo.requesthttp;
 
 import com.hilo.bean.PacketBase;
 
+import java.io.Serializable;
+
 public class HttpParse {
 
     public static class LoginVerify extends PacketBase {
@@ -85,4 +87,71 @@ public class HttpParse {
 	}*/
 
 
+    public class NotifyGroup implements Serializable {
+
+/*    “ID”:1,//唯一编号
+            “Title”:”欢迎使用企商宝”,//标题
+            “Content”:”欢迎使用企商宝，使用过程中有任何疑问，请联系客服人员”,//内容
+            “CreateDate”:””,//创建日期，日期格式
+            “NotifyDate”:””,//通知日期，日期格式*/
+
+        private static final long serialVersionUID = 1L;
+
+        public int ID;
+        public String Title;
+        public String Content;
+        public String CreateDate;
+        public String NotifyDate;
+
+        public int getID() {
+            return ID;
+        }
+
+        public void setID(int ID) {
+            this.ID = ID;
+        }
+
+        public String getTitle() {
+            return Title;
+        }
+
+        public void setTitle(String title) {
+            Title = title;
+        }
+
+        public String getContent() {
+            return Content;
+        }
+
+        public void setContent(String content) {
+            Content = content;
+        }
+
+        public String getCreateDate() {
+            return CreateDate;
+        }
+
+        public void setCreateDate(String createDate) {
+            CreateDate = createDate;
+        }
+
+        public String getNotifyDate() {
+            return NotifyDate;
+        }
+
+        public void setNotifyDate(String notifyDate) {
+            NotifyDate = notifyDate;
+        }
+
+        @Override
+        public String toString() {
+            return "NotifyGroup{" +
+                    "ID=" + ID +
+                    ", Title='" + Title + '\'' +
+                    ", Content='" + Content + '\'' +
+                    ", CreateDate='" + CreateDate + '\'' +
+                    ", NotifyDate='" + NotifyDate + '\'' +
+                    '}';
+        }
+    }
 }

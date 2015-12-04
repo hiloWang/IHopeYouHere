@@ -11,6 +11,7 @@ import com.hilo.adapter.TestDialogAdapter;
 import com.hilo.animotions.BaseAnimatorSet;
 import com.hilo.animotions.BounceEnter.BounceTopEnter;
 import com.hilo.animotions.SlideExit.SlideBottomExit;
+import com.hilo.bean.PacketBase;
 import com.hilo.dialog.animdilogs.ActionSheetDialog;
 import com.hilo.dialog.animdilogs.DialogMenuItem;
 import com.hilo.dialog.animdilogs.MaterialDialog;
@@ -18,7 +19,9 @@ import com.hilo.dialog.animdilogs.NormalDialog;
 import com.hilo.dialog.animdilogs.NormalListDialog;
 import com.hilo.listeners.OnBtnClickL;
 import com.hilo.listeners.OnOperItemClickL;
+import com.hilo.others.HttpFactory;
 import com.hilo.util.T;
+import com.hilo.util.Utils;
 
 import java.util.ArrayList;
 
@@ -384,6 +387,13 @@ public class DialogManager {
             @Override
             public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
                 T.showShort(context, stringItems[position]);
+                switch (position) {
+                    case 0:
+//                        DemoReg dReg = new DemoReg("18676747673","ABCD", UUID.randomUUID().toString());
+                        CloudData cData = new CloudData("243df2295c4c56bb19888285ee91e6e9", "kaifaku2", "SANDY", "", "");
+                        HttpFactory.getInstance().requestServerUrl(Utils.parseToJson(cData), "http://cloud2.sap360.com.cn:36010/api/User/Login"/*"http://cloud.sap360.com.cn:36010/Register/DemoRegister"*/, true, false, true);
+                        break;
+                }
                 dialog.dismiss();
             }
         });
@@ -401,5 +411,38 @@ public class DialogManager {
                 dialog.dismiss();
             }
         });
+    }
+
+    class DemoReg{
+        public String MobilePhone;
+        public String CheckCode;   //验证码
+        public String GuidCode;
+        public DemoReg(String mobilePhone, String checkCode, String guidCode) {
+            MobilePhone = mobilePhone;
+            CheckCode = checkCode;
+            GuidCode = guidCode;
+        }
+    }
+
+    public class DemoRegister extends PacketBase {
+        public int Port;
+        public String ServerName;
+    }
+
+    public class CloudData {
+        public String ClientID;
+        public String CompanyCode;
+        public String UserCode;
+        public String MobilePhone;
+        public String Name;
+
+        public CloudData(String clientID, String companyCode, String userCode,
+                         String mobilePhone, String name) {
+            ClientID = clientID;
+            CompanyCode = companyCode;
+            UserCode = userCode;
+            MobilePhone = mobilePhone;
+            Name = name;
+        }
     }
 }

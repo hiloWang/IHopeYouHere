@@ -16,6 +16,7 @@ import com.hilo.R;
 import com.hilo.activity.BaseActivity;
 import com.hilo.activity.LoginActivity;
 import com.hilo.others.Configuration;
+import com.hilo.others.DataBaseFactory;
 import com.hilo.others.Fields;
 import com.hilo.others.MyApplication;
 import com.hilo.requesthttp.HttpClient;
@@ -29,6 +30,7 @@ import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by hilo on 15/12/1.
@@ -143,7 +145,7 @@ public class Utils {
      */
     public static void setAllStaticVarsNull() {
         try {
-
+            DataBaseFactory.setDbManagerNull();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -287,4 +289,47 @@ public class Utils {
         String token = HttpClient.createToken(reqParam, code);
         return Configuration.getConfig().serverAddress + reqParam.cmd + Configuration.getConfig().sessionKey + "/" + Integer.parseInt(code) + "/" + token;
     }
+
+
+    /**
+     * 转MD5并加密
+     * @param origin
+     * @param charsetname
+     * @return
+     */
+    public static String MD5Encode(String origin, String charsetname) {
+        String resultString = null;
+        try {
+            resultString = new String(origin);
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            if (charsetname == null || "".equals(charsetname))
+                resultString = byteArrayToHexString(md.digest(resultString
+                        .getBytes()));
+            else
+                resultString = byteArrayToHexString(md.digest(resultString
+                        .getBytes(charsetname)));
+        } catch (Exception exception) {
+        }
+        return resultString;
+    }
+
+    private static String byteArrayToHexString(byte b[]) {
+        StringBuffer resultSb = new StringBuffer();
+        for (int i = 0; i < b.length; i++)
+            resultSb.append(byteToHexString(b[i]));
+
+        return resultSb.toString();
+    }
+
+    private static final String hexDigits[] = { "0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+    private static String byteToHexString(byte b) {
+        int n = b;
+        if (n < 0)
+            n += 256;
+        int d1 = n / 16;
+        int d2 = n % 16;
+        return hexDigits[d1] + hexDigits[d2];
+    }
 }
+

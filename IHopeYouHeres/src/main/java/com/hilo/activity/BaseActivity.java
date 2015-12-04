@@ -13,6 +13,7 @@ import com.hilo.animotions.BounceEnter.BounceTopEnter;
 import com.hilo.animotions.SlideExit.SlideBottomExit;
 import com.hilo.dialog.animdilogs.NormalDialog;
 import com.hilo.listeners.OnBtnClickL;
+import com.hilo.others.DataBaseFactory;
 import com.hilo.others.MyApplication;
 import com.hilo.receiver.ExceptionLoingOutReceiver;
 import com.hilo.util.LogUtils;
@@ -47,15 +48,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onPostCreate(savedInstanceState, persistentState);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        mActivityArray.remove(this);
-        LogUtils.I("mlog", "BaseActivity onDestroy:" + mActivityArray.size());
-        unregisterReceiver(receiver);
-        super.onDestroy();
     }
 
     @Override
@@ -96,13 +88,18 @@ public class BaseActivity extends AppCompatActivity {
             act.finish();
         }
         mActivityArray.clear();
+        mActivityArray = null;
     }
 
     public static void exitApp() {
-        Utils.setAllStaticVarsNull();
-        exitAllActivity();
-//        DbfEngine.close();
-        System.gc();
+        try {
+            Utils.setAllStaticVarsNull();
+            exitAllActivity();
+            DataBaseFactory.getInstance().close();
+            System.gc();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -117,5 +114,13 @@ public class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        mActivityArray.remove(this);
+        LogUtils.I("mlog", "BaseActivity onDestroy:" + mActivityArray.size());
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 }
