@@ -10,13 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.hilo.data.T_TEST;
-import com.hilo.others.DataBaseFactory;
-
-import org.xutils.DbManager;
-import org.xutils.ex.DbException;
-
-import java.util.List;
+import com.hilo.dialog.DialogManager;
 
 /**
  * Created by hilo on 15/11/10.
@@ -49,7 +43,7 @@ public class FragmentButton extends Fragment {
         public void onClick(View v) {
             /*Intent intent = new Intent(mContext, ActivityDialog.class);
             startActivity(intent);*/
-            try {
+            /*try {
             DbManager db = DataBaseFactory.getInstance();
             List<T_TEST> arrs = db.selector(T_TEST.class).findAll();
                 for(T_TEST findAll : arrs) {
@@ -66,7 +60,8 @@ public class FragmentButton extends Fragment {
                 db.saveOrUpdate(t2);
             } catch (DbException e) {
                 e.printStackTrace();
-            }
+            }*/
+            DialogManager.getInstance().NormalListDialog(mContext);
         }
     };
 }

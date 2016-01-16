@@ -78,7 +78,6 @@ import java.util.List;
  *
  * @author created by hilo
  */
-@SuppressWarnings("unused")
 @SuppressLint("InflateParams")
 public abstract class MaterialNavigationDrawer<Fragment> extends BaseActivity implements MaterialSectionListener, MaterialAccount.OnAccountDataLoaded, MultiSwipeRefreshLayout.CanChildScrollUpCallback {
 

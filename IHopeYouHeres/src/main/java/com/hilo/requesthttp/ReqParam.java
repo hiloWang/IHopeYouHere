@@ -102,11 +102,11 @@ public class ReqParam {
         super();
         this.cmd = cmd;
         this.invokeMethod = invokeMethod;
-        this.hasSessionKey = false;
+        this.hasSessionKey = true;
         this.praseClass = praseClass;
         this.isEncrypt = false;
         this.parameterNames = parameterNames;
-        this.hasToken = false;
+        this.hasToken = true;
         this.isDecrypt = false;
     }
 

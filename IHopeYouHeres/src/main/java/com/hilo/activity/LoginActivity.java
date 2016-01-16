@@ -19,6 +19,7 @@ import com.hilo.others.Fields;
 import com.hilo.util.ImageUtils;
 
 import org.xutils.DbManager;
+import org.xutils.x;
 
 /**
  * 1. BaseActivity 为 Activity 栈管理类, 其实这样管理并不是理想的, 容易引起内存泄露.
@@ -47,6 +48,8 @@ public class LoginActivity extends MaterialNavigationDrawer implements OnLayoutC
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
         // 阀值设置为屏幕高度的1/4
         keyHeight = screenHeight / 4;
+
+//        DbManager db = DataBaseFactory.getInstance().
 
 
     }
@@ -107,8 +110,7 @@ public class LoginActivity extends MaterialNavigationDrawer implements OnLayoutC
         super.onDestroy();
         ImageUtils.AnimateFirstDisplayListener.displayedImages.clear();
     }
-
-    @Override
+        @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         // 现在认为只要控件将Activity向上推的高度超过了1/4屏幕高，就认为软键盘弹起
         if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {

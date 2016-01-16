@@ -276,8 +276,6 @@ public class HttpFactory {
                                 e.printStackTrace();
                             }
                         }
-                        HttpParse.NotifyGroup mNotifyGroup = Utils.getGsonInstance().fromJson(result, HttpParse.NotifyGroup.class);
-                        LogUtils.I("NotifyGroup: " + mNotifyGroup.toString());
                     }
 
                     @Override
@@ -330,8 +328,7 @@ public class HttpFactory {
                             LogUtils.I("LoginVerify: " + mLoginVerify.toString());
                             Configuration cfg = Configuration.getConfig();
                             cfg.expiredDate = mLoginVerify.ExpiredDate;
-//                            cfg.serverAddress = "http://" + mLoginVerify.ServerName + ":" + mLoginVerify.Port;
-                            cfg.serverAddress = "http://cloud2.sap360.com.cn:36010";
+                            cfg.serverAddress = "http://" + mLoginVerify.ServerName + ":" + mLoginVerify.Port;
                             Configuration.saveConfig();
                             requestHttp(ReqParam.test, Utils.base64String("kaifaku2"));
                         } catch (Exception e) {
