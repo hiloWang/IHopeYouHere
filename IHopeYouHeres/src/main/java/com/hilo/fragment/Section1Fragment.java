@@ -93,6 +93,10 @@ public class Section1Fragment extends Fragment implements MultiSwipeRefreshLayou
     }
 
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean canSwipeRefreshChildScrollUp() {
         return true;

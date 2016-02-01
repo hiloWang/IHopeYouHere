@@ -37,6 +37,12 @@ public class  FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         bindDefaultFeedItem(position, holder);
     }
 
+    /**
+     * aahah
+     * @param position
+     * @param holder
+     */
+    // hahaha
     private void bindDefaultFeedItem(int position, CellFeedViewHolder holder) {
         if (position % 2 == 0) {
             holder.ivFeedCenter.setImageResource(R.drawable.img_feed_center_1);
